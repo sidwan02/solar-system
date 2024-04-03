@@ -8,7 +8,7 @@ au_to_m = 149597870700
 day_to_sec = 86400
 scale_factor = 1 / 10000
 # number of points in an orbit
-orbital_resolution = 365
+orbital_resolution = 100
 
 days_in_orbit = 365
 
@@ -51,3 +51,6 @@ czml_data[-1]["position"]["cartesian"] = cartesian_coords
 output_file_path = "data/filled_testing2.czml"
 with open(output_file_path, "w") as output_file:
     json.dump(czml_data, output_file)
+
+
+# TODO: there is some issue with the interpolated path not looking good.

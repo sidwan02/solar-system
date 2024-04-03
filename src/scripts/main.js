@@ -20,12 +20,46 @@ function icrf(scene, time) {
 
 function viewInICRF() {
   Sandcastle.declare(viewInICRF);
-
-  viewer.camera.flyHome(0);
-
-  clock.multiplier = 3 * 60 * 60;
   scene.postUpdate.addEventListener(icrf);
+  Sandcastle.highlight(viewInICRF);
+}
+
+function setupViewer() {
+  scene.fog.enabled = false;
+  scene.moon.show = false;
+  scene.sun.show = false;
+  scene.shadowMap.enabled = false;
   scene.globe.enableLighting = false;
+}
+
+function createModel(url, height) {
+  viewer.entities.removeAll();
+
+  const position = Cesium.Cartesian3.fromDegrees(
+    -123.0744619,
+    44.0503706,
+    height
+  );
+  const heading = Cesium.Math.toRadians(135);
+  const pitch = 0;
+  const roll = 0;
+  const hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
+  const orientation = Cesium.Transforms.headingPitchRollQuaternion(
+    position,
+    hpr
+  );
+
+  const entity = viewer.entities.add({
+    name: url,
+    position: position,
+    orientation: orientation,
+    model: {
+      uri: url,
+      minimumPixelSize: 128,
+      maximumScale: 20000,
+    },
+  });
+  viewer.trackedEntity = entity;
 }
 
 Sandcastle.addDefaultToolbarButton('Satellites', function () {
@@ -34,9 +68,11 @@ Sandcastle.addDefaultToolbarButton('Satellites', function () {
     // Cesium.CzmlDataSource.load('../../czml/testing2.czml')
   );
 
-  viewInICRF();
+  // todo: instead call these on load
+  // viewInICRF();
+  setupViewer();
 
-  // viewer.camera.flyHome(0);
+  viewer.camera.flyHome(0);
 });
 
 Sandcastle.reset = function () {
