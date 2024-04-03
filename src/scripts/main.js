@@ -3,7 +3,7 @@ const viewer = new Cesium.Viewer('cesiumContainer', {
 });
 
 Sandcastle.addDefaultToolbarButton('Satellites', function () {
-  viewer.dataSources.add(Cesium.CzmlDataSource.load('../../czml/simple.czml'));
+  viewer.dataSources.add(Cesium.CzmlDataSource.load('../../czml/testing.czml'));
 
   viewer.camera.flyHome(0);
 });
