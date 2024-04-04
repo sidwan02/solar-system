@@ -1,5 +1,7 @@
 import json
 import math
+from calc_quaternion import calc_quaternion
+import numpy as np
 
 file_path = "data\earth_helios_bgaiRcAjxg.lst"
 # lines = []
@@ -13,6 +15,7 @@ orbital_resolution = 100
 days_in_orbit = 365
 
 cartesian_coords = []
+end_t = 0
 
 with open(file_path, "r") as file:
     next(file)
@@ -33,9 +36,32 @@ with open(file_path, "r") as file:
         cartesian_coords.append(y)
         cartesian_coords.append(z)
 
+        end_t = t
         t += day_to_sec * stride
 
-# for some strange reason the geoeye satellite is missing from the image when making this change.
+quaternion_vals = []
+
+full_rotation_duration = day_to_sec
+
+# number of points per rotation
+# if you reduce this there's an array lenght error? might be because the sqrt square of the vals is no longer close enough to 1, since I'm flooring values of 16 sf to 0. This issue only happens if w is ever rounded.
+angle_granularity = np.pi / 16
+
+cur_angle = 0
+t = 0
+while t <= end_t:
+    # TODO: later on these direction cosine angles will be replaced for different planets depending on their axial tilt
+    x, y, z, w = calc_quaternion(cur_angle, [np.pi / 2, np.pi / 2, np.pi / 2])
+    quaternion_vals.append(t)
+    quaternion_vals.append(x)
+    quaternion_vals.append(y)
+    quaternion_vals.append(z)
+    quaternion_vals.append(w)
+
+    # seconds in day / number of angles to complete one rotation
+    t += full_rotation_duration / ((2 * np.pi) / angle_granularity)
+    cur_angle = (cur_angle + angle_granularity) % (2 * np.pi)
+
 
 # TODO: for each new orbit have a new trailing orbit and leading orbit timestamp generation
 # Can start with a basic trail and leading time being the time period of one orbit, then could have interpolated trailing times to draw new orbit only after completoin of old one rather than in real time.
@@ -46,6 +72,7 @@ with open("czml/testing2.czml", "r") as czml_file:
 
 # Add the cartesian coordinates to the JSON
 czml_data[-1]["position"]["cartesian"] = cartesian_coords
+czml_data[-1]["orientation"]["unitQuaternion"] = quaternion_vals
 
 # Write the updated JSON to a new czml file
 output_file_path = "data/filled_testing2.czml"
