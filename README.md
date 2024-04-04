@@ -75,3 +75,7 @@ Planet rotation with time:
 - https://github.com/AnalyticalGraphicsInc/czml-writer/wiki/Orientation
 - https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles
   - Relation between quaternion and direction cosines
+
+Removing sandcastle elements:
+
+- https://community.cesium.com/t/only-display-3d-model-without-globe/10545/2

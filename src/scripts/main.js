@@ -1,11 +1,18 @@
 const viewer = new Cesium.Viewer('cesiumContainer', {
   shouldAnimate: true,
+  globe: false,
 });
 const scene = viewer.scene;
 const clock = viewer.clock;
 
 function icrf(scene, time) {
   if (scene.mode !== Cesium.SceneMode.SCENE3D) {
+    return;
+  }
+
+  // when it's nothing, it's undefined. When it's the Earth, the _id is 'Earth'
+  // Might have to change this to be neither undefined nor 'Sun'
+  if (viewer.trackedEntity != undefined) {
     return;
   }
 
@@ -19,9 +26,9 @@ function icrf(scene, time) {
 }
 
 function viewInICRF() {
-  Sandcastle.declare(viewInICRF);
+  // Sandcastle.declare(viewInICRF);
   scene.postUpdate.addEventListener(icrf);
-  Sandcastle.highlight(viewInICRF);
+  // Sandcastle.highlight(viewInICRF);
 }
 
 function setupViewer() {
@@ -69,7 +76,7 @@ Sandcastle.addDefaultToolbarButton('Satellites', function () {
   );
 
   // todo: instead call these on load
-  // viewInICRF();
+  viewInICRF();
   setupViewer();
 
   viewer.camera.flyHome(0);

@@ -4,7 +4,6 @@ from calc_quaternion import calc_quaternion
 import numpy as np
 
 file_path = "data\earth_helios_bgaiRcAjxg.lst"
-# lines = []
 
 au_to_m = 149597870700
 day_to_sec = 86400
