@@ -1,6 +1,6 @@
 const viewer = new Cesium.Viewer('cesiumContainer', {
   shouldAnimate: true,
-  // globe: true,
+  globe: false,
 });
 const scene = viewer.scene;
 const clock = viewer.clock;
@@ -36,7 +36,7 @@ function setupViewer() {
   scene.moon.show = false;
   scene.sun.show = false;
   scene.shadowMap.enabled = false;
-  // scene.globe.enableLighting = false;
+  scene.globe.enableLighting = false;
 }
 
 var start = Cesium.JulianDate.fromDate(new Date(Date.UTC(2000, 0, 1)));
@@ -55,38 +55,38 @@ function clockSetup() {
   viewer.timeline.zoomTo(start, stop);
 }
 
-function addModel() {
-  var earth_entity = viewer.entities.add({
-    id: 'Earth',
+// function addModel() {
+//   var earth_entity = viewer.entities.add({
+//     id: 'Earth',
 
-    //Set the entity availability to the same interval as the simulation time.
-    availability: new Cesium.TimeIntervalCollection([
-      new Cesium.TimeInterval({
-        start: start,
-        stop: stop,
-      }),
-    ]),
+//     //Set the entity availability to the same interval as the simulation time.
+//     availability: new Cesium.TimeIntervalCollection([
+//       new Cesium.TimeInterval({
+//         start: start,
+//         stop: stop,
+//       }),
+//     ]),
 
-    //Load the Cesium plane model to represent the entity
-    model: {
-      uri: '../../models/Earth_1_12756.glb',
-      minimumPixelSize: 64,
-    },
+//     //Load the Cesium plane model to represent the entity
+//     model: {
+//       uri: '../../models/Earth_1_12756.glb',
+//       minimumPixelSize: 64,
+//     },
 
-    //Show the path as a pink line sampled in 1 second increments.
-  });
-  console.log('created model');
+//     //Show the path as a pink line sampled in 1 second increments.
+//   });
+//   console.log('created model');
 
-  // earth_entity.position = positionProperty;
-  earth_entity.position = Cesium.Cartesian3.fromDegrees(0, 0, 1000);
-  // earth_entity.orientation = orientationProperty;
+//   earth_entity.position = positionProperty;
+//   // earth_entity.position = Cesium.Cartesian3.fromDegrees(0, 0, 0);
+//   // earth_entity.orientation = orientationProperty;
 
-  viewer.trackedEntity = earth_entity;
-  // console.log(earth_entity.position);
-  // viewer.camera.flyTo(earth_entity.position);
-}
+//   viewer.trackedEntity = earth_entity;
+//   // console.log(earth_entity.position);
+//   // viewer.camera.flyTo(earth_entity.position);
+// }
 
-function setEarthOrientations() {
+function setEarthOrientations(earth_entity) {
   // console.log(viewer.dataSources);
   // var entity = viewer.entities.getById('Earth');
   // console.log(entity);
@@ -94,6 +94,8 @@ function setEarthOrientations() {
   var positionProperty = new Cesium.SampledPositionProperty();
   var orientationProperty = new Cesium.SampledProperty(Cesium.Quaternion);
 
+  // takes 10 days for full rotation
+  // rotation_duration = 86400 * (360 / 30);
   rotation_duration = 86400;
   seconds_in_yr = 31536000;
 
@@ -104,15 +106,15 @@ function setEarthOrientations() {
   var file_path = '../../data/earth_helios_bgaiRcAjxg.lst';
 
   var days_in_orbit = 365;
-  var orbital_resolution = 100;
+  var orbital_resolution = 365;
   var au_to_m = 149597870700;
   var scale_factor = 1 / 10000;
   var day_to_sec = 86400;
 
   var stride = days_in_orbit / orbital_resolution;
 
-  var t = 0;
-
+  var orientation_t = 0;
+  var position_t = 0;
   // console.log('start: ' + start);
 
   // TODO: modify this code to have two ts. One for the position and one for the orientation. If the orientation ts is ahead of the next position ts, we make sure to record our new o we need to wait until the next position ts is recorded, and ensure that the reference position is the most recent one.
@@ -126,17 +128,21 @@ function setEarthOrientations() {
       var orientations = [];
       var coords = [];
 
+      // while (t <= seconds_in_yr) {
+
+      // }
+
       for (var i = 1; i < lines.length; i++) {
         if ((i - 1) % Math.floor(stride) !== 0) {
           continue;
         }
         var time = Cesium.JulianDate.addSeconds(
           start,
-          t,
+          position_t,
           new Cesium.JulianDate()
         );
 
-        console.log(time);
+        // console.log(time);
 
         num_points += 1;
 
@@ -147,6 +153,9 @@ function setEarthOrientations() {
         var x = parseFloat(line[2]) * au_to_m * scale_factor;
         var y = parseFloat(line[3]) * au_to_m * scale_factor;
         var z = parseFloat(line[4]) * au_to_m * scale_factor;
+        // var x = 0;
+        // var y = 0;
+        // var z = 0;
         // console.log('x: ' + x + ', y: ' + y + ', z: ' + z);
         // throw new Error('stop');
 
@@ -154,7 +163,7 @@ function setEarthOrientations() {
         // var position = new Cesium.Cartesian3(0, 0, 0);
         // var position = Cesium.Cartesian3.fromDegrees(100, 10, 1750);
 
-        coords.push(t);
+        coords.push(position_t);
         coords.push(x);
         coords.push(y);
         coords.push(z);
@@ -165,41 +174,40 @@ function setEarthOrientations() {
         // console.log('new point t: ' + t);
 
         // add the rotations until the next position update.
-        next_position_at = t + day_to_sec * stride;
+        next_position_t = position_t + day_to_sec * stride;
 
-        console.log('next_position_at: ', next_position_at);
-        for (
-          t;
-          t <= next_position_at;
-          t += rotation_duration / (360 / angle_increment)
-        ) {
+        // console.log('next_position_t: ', next_position_t);
+
+        var num_orientations_per_pos = 0;
+        while (orientation_t < next_position_t) {
           // console.log('t: ' + t);
           var time = Cesium.JulianDate.addSeconds(
             start,
-            t,
+            orientation_t,
             new Cesium.JulianDate()
           );
 
-          console.log('cur_angle: ' + cur_angle);
-          console.log('t: ' + t);
+          // console.log('cur_angle: ' + cur_angle);
+          // console.log('orientation_t: ' + orientation_t);
           // compute orientations
-          var heading = Cesium.Math.toRadians(0);
+          // depending on the scale factor, may need to change the heading.
+          var heading = Cesium.Math.toRadians(-90);
           var pitch = Cesium.Math.toRadians(50);
           var roll = Cesium.Math.toRadians(cur_angle);
           var hpRoll = new Cesium.HeadingPitchRoll(heading, pitch, roll);
-          // var orientation = Cesium.Transforms.headingPitchRollQuaternion(
-          //   position,
-          //   hpRoll
-          // );
           var orientation = Cesium.Transforms.headingPitchRollQuaternion(
-            Cesium.Cartesian3.fromDegrees(0, 0, 1000),
+            position,
             hpRoll
           );
+          // var orientation = Cesium.Transforms.headingPitchRollQuaternion(
+          //   new Cesium.Cartesian3(0, 0, 0),
+          //   hpRoll
+          // );
 
           // console.log(orientation);
           // throw new Error('stop');
 
-          orientations.push(t);
+          orientations.push(orientation_t);
           orientations.push(orientation.x);
           orientations.push(orientation.y);
           orientations.push(orientation.z);
@@ -207,7 +215,7 @@ function setEarthOrientations() {
 
           time = Cesium.JulianDate.addSeconds(
             start,
-            t,
+            orientation_t,
             new Cesium.JulianDate()
           );
 
@@ -215,11 +223,27 @@ function setEarthOrientations() {
           // console.log(orientation);
 
           cur_angle = (cur_angle + angle_increment) % 360;
+
+          orientation_t += rotation_duration / (360 / angle_increment);
+
+          num_orientations_per_pos += 1;
         }
 
-        console.log('actual t: ' + t);
+        console.log('num_orientations_per_pos: ' + num_orientations_per_pos);
 
-        // throw new Error('stop');
+        position_t = next_position_t;
+        // console.log('next_position_t: ' + position_t);
+
+        // for (
+        //   t;
+        //   t <= next_position_t;
+        //   t += rotation_duration / (360 / angle_increment)
+        // ) {}
+
+        // console.log('actual t: ' + t);
+        // if (position_t >= 630720) {
+        //   throw new Error('stop');
+        // }
       }
       console.log('num_points: ' + num_points);
 
@@ -230,6 +254,11 @@ function setEarthOrientations() {
         interpolationAlgorithm: Cesium.LagrangePolynomialApproximation,
       });
 
+      orientationProperty.setInterpolationOptions({
+        interpolationDegree: 1,
+        interpolationAlgorithm: Cesium.LinearApproximation,
+      });
+
       console.log(coords);
       console.log(orientations);
 
@@ -237,49 +266,49 @@ function setEarthOrientations() {
 
       // console.log('positionProperty: ', positionProperty);
 
-      var earth_entity = viewer.entities.add({
-        id: 'Earth',
+      // var earth_entity = viewer.entities.add({
+      //   id: 'Earth',
 
-        //Set the entity availability to the same interval as the simulation time.
-        availability: new Cesium.TimeIntervalCollection([
-          new Cesium.TimeInterval({
-            start: start,
-            stop: stop,
-          }),
-        ]),
+      //   //Set the entity availability to the same interval as the simulation time.
+      //   availability: new Cesium.TimeIntervalCollection([
+      //     new Cesium.TimeInterval({
+      //       start: start,
+      //       stop: stop,
+      //     }),
+      //   ]),
 
-        //Use our computed positions
-        // position: positionProperty,
-        // orientation: orientationProperty,
+      //   //Use our computed positions
+      //   // position: positionProperty,
+      //   // orientation: orientationProperty,
 
-        //Load the Cesium plane model to represent the entity
-        model: {
-          // uri: '../../models/Earth_1_12756.glb',
-          uri: '../../models/Earth_rot_around_x.glb',
-          minimumPixelSize: 64,
-        },
+      //   //Load the Cesium plane model to represent the entity
+      //   model: {
+      //     // uri: '../../models/Earth_1_12756.glb',
+      //     uri: '../../models/Earth_rot_around_x.glb',
+      //     minimumPixelSize: 64,
+      //   },
 
-        //Show the path as a pink line sampled in 1 second increments.
-        path: {
-          resolution: 1,
-          material: new Cesium.PolylineGlowMaterialProperty({
-            glowPower: 0.1,
-            color: Cesium.Color.YELLOW,
-          }),
-          width: 10,
-        },
-      });
-      console.log('created model');
+      //   //Show the path as a pink line sampled in 1 second increments.
+      //   path: {
+      //     resolution: 1,
+      //     material: new Cesium.PolylineGlowMaterialProperty({
+      //       glowPower: 0.1,
+      //       color: Cesium.Color.YELLOW,
+      //     }),
+      //     width: 10,
+      //   },
+      // });
+      // console.log('created model');
 
       console.log(positionProperty);
       console.log(orientationProperty);
 
-      // earth_entity.position = positionProperty;
-      earth_entity.position = Cesium.Cartesian3.fromDegrees(0, 0, 1000);
+      earth_entity.position = positionProperty;
+      // earth_entity.position = Cesium.Cartesian3.fromDegrees(0, 0, 0);
       earth_entity.orientation = orientationProperty;
 
       viewer.trackedEntity = earth_entity;
-      console.log(earth_entity.position);
+      // console.log(earth_entity.position);
       // viewer.camera.flyTo(earth_entity.position);
     })
     .catch((error) => {
@@ -288,14 +317,23 @@ function setEarthOrientations() {
 }
 
 Sandcastle.addDefaultToolbarButton('Satellites', function () {
-  // viewer.dataSources.add(
-  //   Cesium.CzmlDataSource.load('../../data/filled_testing2.czml')
-  //   // Cesium.CzmlDataSource.load('../../czml/testing2.czml')
-  // );
-  // console.log(viewer.entities.getById('Earth'));
+  var dataSource = Cesium.CzmlDataSource.load(
+    '../../data/filled_testing2.czml'
+  );
+
+  viewer.dataSources.add(
+    // Cesium.CzmlDataSource.load('../../czml/testing2.czml')
+    dataSource
+  );
+
+  dataSource.then(function (ds) {
+    console.log('created datasource');
+    console.log();
+    setEarthOrientations(ds.entities.getById('Earth'));
+  });
 
   // todo: instead call these on load
-  // viewInICRF();
+  viewInICRF();
 
   //setup the clock
   clockSetup();
@@ -305,7 +343,6 @@ Sandcastle.addDefaultToolbarButton('Satellites', function () {
 
   setupViewer();
 
-  setEarthOrientations();
   // addModel();
 
   viewer.camera.flyHome(0);
