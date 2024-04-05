@@ -1,6 +1,6 @@
 import json
 import math
-from calc_quaternion import calc_quaternion
+from calc_quaternion import calc_quaternion, calc_quaternion_dircos
 import numpy as np
 
 file_path = "data\earth_helios_bgaiRcAjxg.lst"
@@ -44,22 +44,17 @@ full_rotation_duration = day_to_sec
 
 # number of points per rotation
 # if you reduce this there's an array lenght error? might be because the sqrt square of the vals is no longer close enough to 1, since I'm flooring values of 16 sf to 0. This issue only happens if w is ever rounded.
-angle_granularity = np.pi / 16
-
-cur_angle = 0
 t = 0
 while t <= end_t:
-    # TODO: later on these direction cosine angles will be replaced for different planets depending on their axial tilt
-    x, y, z, w = calc_quaternion(cur_angle, [np.pi / 2, np.pi / 2, np.pi / 2])
     quaternion_vals.append(t)
-    quaternion_vals.append(x)
-    quaternion_vals.append(y)
-    quaternion_vals.append(z)
-    quaternion_vals.append(w)
+    quaternion_vals.append(1)
+    quaternion_vals.append(1)
+    quaternion_vals.append(1)
+    quaternion_vals.append(1)
 
     # seconds in day / number of angles to complete one rotation
-    t += full_rotation_duration / ((2 * np.pi) / angle_granularity)
-    cur_angle = (cur_angle + angle_granularity) % (2 * np.pi)
+    # t += full_rotation_duration / ((2 * np.pi) / angle_granularity)
+    t += 300
 
 
 # TODO: for each new orbit have a new trailing orbit and leading orbit timestamp generation

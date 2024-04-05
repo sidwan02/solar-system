@@ -18,6 +18,22 @@ def calc_quaternion(angle, direction_cosine_angles):
     # return [0, 0, 0, w]
 
 
+def calc_quaternion_dircos(angle, direction_cosines):
+    # print("..")
+    # print(angle, direction_cosine_angles)
+    angle = angle / 2
+    w = cos(angle)
+    x = sin(angle) * direction_cosines[0]
+    y = sin(angle) * direction_cosines[1]
+    z = sin(angle) * direction_cosines[2]
+    # print(w, x, y, z)
+    # print(np.sqrt(w**2 + x**2 + y**2 + z**2) - 1)
+    assert np.sqrt(w**2 + x**2 + y**2 + z**2) - 1 < 1e-8
+    return np.array([0.0 if abs(el) < 1e-16 else el for el in [x, y, z, w]])
+    # return [x, y, z, w]
+    # return [0, 0, 0, w]
+
+
 if "__main__" == __name__:
     print(calc_quaternion(np.pi / 2, [np.pi / 2, 0, np.pi / 2]))
 # as alpha increases:

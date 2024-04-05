@@ -35,6 +35,8 @@ Camera position:
 
 - https://sandcastle.cesium.com/index.html?src=Camera.html
   - in ICRF the sky doesn't rotate, instead the Earth does
+- https://github.com/CesiumGS/cesium/issues/8859#issuecomment-630424621
+  - ICRF continually updates
 
 Path interpolation:
 
@@ -75,6 +77,15 @@ Planet rotation with time:
 - https://github.com/AnalyticalGraphicsInc/czml-writer/wiki/Orientation
 - https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles
   - Relation between quaternion and direction cosines
+- https://docs.advancednavigation.com/certus/SensorCoordinate.htm#_Axes
+  - Understanding roll pitch yaw
+- https://stackoverflow.com/questions/43389069/cesium-how-to-animate-an-aircraft-from-pitch-roll-heading
+  - Make a sandbox using this, shows how wuaternions work wrt roll pitch and yaw
+  - Need to make the model url ../ and .glb
+- https://gist.github.com/thw0rted/4857eea152fcc54265330c00775f0fb5
+- https://cesium.com/learn/ion-sdk/ref-doc/HeadingPitchRoll.html
+  - A rotation expressed as a heading, pitch, and roll. Heading is the rotation about the negative z axis. Pitch is the rotation about the negative y axis. Roll is the rotation about the positive x axis.
+- ![alt text](image-1.png)
 
 Removing sandcastle elements:
 
