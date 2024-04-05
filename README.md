@@ -90,3 +90,8 @@ Planet rotation with time:
 Removing sandcastle elements:
 
 - https://community.cesium.com/t/only-display-3d-model-without-globe/10545/2
+
+Access entities from datasource
+Update czml from js
+
+- https://groups.google.com/g/cesium-dev/c/5WaK5vgNaSI

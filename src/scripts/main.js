@@ -55,69 +55,54 @@ function clockSetup() {
   viewer.timeline.zoomTo(start, stop);
 }
 
-// function addModel() {
-//   var earth_entity = viewer.entities.add({
-//     id: 'Earth',
+const day_to_sec = 86400;
 
-//     //Set the entity availability to the same interval as the simulation time.
-//     availability: new Cesium.TimeIntervalCollection([
-//       new Cesium.TimeInterval({
-//         start: start,
-//         stop: stop,
-//       }),
-//     ]),
+const earthParams = new Map([
+  ['id', 'Earth'],
+  ['name', 'Earth'],
+  ['model_path', '../models/Earth_1_12756.glb'],
+  ['availability', '2021-01-01T00:00:00Z/2022-01-01T00:00:00Z'],
+  ['description', ''],
+  ['helio_path', '../../data/earth_helios_bgaiRcAjxg.lst'],
+  // days
+  ['revolution_period', 365],
+  // number of data points in each revolution
+  ['orbital_resolution', 365],
+  // seconds
+  ['rotation_period', day_to_sec],
+  ['axial_tilt', 23.5],
+  ['heading', -50],
+]);
 
-//     //Load the Cesium plane model to represent the entity
-//     model: {
-//       uri: '../../models/Earth_1_12756.glb',
-//       minimumPixelSize: 64,
-//     },
+const au_to_m = 149597870700;
+const scale_factor = 1 / 10000;
 
-//     //Show the path as a pink line sampled in 1 second increments.
-//   });
-//   console.log('created model');
-
-//   earth_entity.position = positionProperty;
-//   // earth_entity.position = Cesium.Cartesian3.fromDegrees(0, 0, 0);
-//   // earth_entity.orientation = orientationProperty;
-
-//   viewer.trackedEntity = earth_entity;
-//   // console.log(earth_entity.position);
-//   // viewer.camera.flyTo(earth_entity.position);
-// }
-
-function setEarthOrientations(earth_entity) {
+function setPlanetProperties(planet_entity, planet_params) {
   // console.log(viewer.dataSources);
   // var entity = viewer.entities.getById('Earth');
   // console.log(entity);
 
+  console.log('planet_params: ', planet_params);
+
   var positionProperty = new Cesium.SampledPositionProperty();
   var orientationProperty = new Cesium.SampledProperty(Cesium.Quaternion);
 
-  // takes 10 days for full rotation
-  // rotation_duration = 86400 * (360 / 30);
-  rotation_duration = 86400;
-  seconds_in_yr = 31536000;
+  var rotation_period = planet_params.get('rotation_period');
 
   // in degrees
   angle_increment = 30;
   cur_angle = 0;
 
-  var file_path = '../../data/earth_helios_bgaiRcAjxg.lst';
+  var file_path = planet_params.get('helio_path');
 
-  var days_in_orbit = 365;
-  var orbital_resolution = 365;
-  var au_to_m = 149597870700;
-  var scale_factor = 1 / 10000;
-  var day_to_sec = 86400;
+  var revolution_period = planet_params.get('revolution_period');
+  var orbital_resolution = planet_params.get('orbital_resolution');
 
-  var stride = days_in_orbit / orbital_resolution;
+  var stride = revolution_period / orbital_resolution;
 
   var orientation_t = 0;
   var position_t = 0;
   // console.log('start: ' + start);
-
-  // TODO: modify this code to have two ts. One for the position and one for the orientation. If the orientation ts is ahead of the next position ts, we make sure to record our new o we need to wait until the next position ts is recorded, and ensure that the reference position is the most recent one.
 
   fetch(file_path)
     .then((response) => response.text())
@@ -127,10 +112,6 @@ function setEarthOrientations(earth_entity) {
 
       var orientations = [];
       var coords = [];
-
-      // while (t <= seconds_in_yr) {
-
-      // }
 
       for (var i = 1; i < lines.length; i++) {
         if ((i - 1) % Math.floor(stride) !== 0) {
@@ -191,8 +172,8 @@ function setEarthOrientations(earth_entity) {
           // console.log('orientation_t: ' + orientation_t);
           // compute orientations
           // depending on the scale factor, may need to change the heading.
-          var heading = Cesium.Math.toRadians(-90);
-          var pitch = Cesium.Math.toRadians(50);
+          var heading = Cesium.Math.toRadians(planet_params.get('heading'));
+          var pitch = Cesium.Math.toRadians(planet_params.get('axial_tilt'));
           var roll = Cesium.Math.toRadians(cur_angle);
           var hpRoll = new Cesium.HeadingPitchRoll(heading, pitch, roll);
           var orientation = Cesium.Transforms.headingPitchRollQuaternion(
@@ -224,7 +205,7 @@ function setEarthOrientations(earth_entity) {
 
           cur_angle = (cur_angle + angle_increment) % 360;
 
-          orientation_t += rotation_duration / (360 / angle_increment);
+          orientation_t += rotation_period / (360 / angle_increment);
 
           num_orientations_per_pos += 1;
         }
@@ -233,12 +214,6 @@ function setEarthOrientations(earth_entity) {
 
         position_t = next_position_t;
         // console.log('next_position_t: ' + position_t);
-
-        // for (
-        //   t;
-        //   t <= next_position_t;
-        //   t += rotation_duration / (360 / angle_increment)
-        // ) {}
 
         // console.log('actual t: ' + t);
         // if (position_t >= 630720) {
@@ -266,7 +241,7 @@ function setEarthOrientations(earth_entity) {
 
       // console.log('positionProperty: ', positionProperty);
 
-      // var earth_entity = viewer.entities.add({
+      // var planet_entity = viewer.entities.add({
       //   id: 'Earth',
 
       //   //Set the entity availability to the same interval as the simulation time.
@@ -303,18 +278,44 @@ function setEarthOrientations(earth_entity) {
       console.log(positionProperty);
       console.log(orientationProperty);
 
-      earth_entity.position = positionProperty;
-      // earth_entity.position = Cesium.Cartesian3.fromDegrees(0, 0, 0);
-      earth_entity.orientation = orientationProperty;
+      planet_entity.position = positionProperty;
+      // planet_entity.position = Cesium.Cartesian3.fromDegrees(0, 0, 0);
+      planet_entity.orientation = orientationProperty;
 
-      viewer.trackedEntity = earth_entity;
-      // console.log(earth_entity.position);
-      // viewer.camera.flyTo(earth_entity.position);
+      viewer.trackedEntity = planet_entity;
+      // console.log(planet_entity.position);
+      // viewer.camera.flyTo(planet_entity.position);
     })
     .catch((error) => {
       console.error('Error reading file:', error);
     });
 }
+
+const planetEntityIds = [
+  // 'Sun',
+  // 'Mercury',
+  // 'Venus',
+  'Earth',
+  // 'Mars',
+  // 'Jupiter',
+  // 'Saturn',
+  // 'Uranus',
+  // 'Neptune  ',
+  // 'Pluto',
+];
+
+const planetParams = new Map([
+  // ['Sun', sunParams],
+  // ['Mercury', mercuryParams],
+  // ['Venus', venusParams],
+  ['Earth', earthParams],
+  // ['Mars', marsParams],
+  // ['Jupiter', jupiterParams],
+  // ['Saturn', saturnParams],
+  // ['Uranus', uranusParams],
+  // ['Neptune', neptuneParams],
+  // ['Pluto', plutoParams]
+]);
 
 Sandcastle.addDefaultToolbarButton('Satellites', function () {
   var dataSource = Cesium.CzmlDataSource.load(
@@ -328,8 +329,12 @@ Sandcastle.addDefaultToolbarButton('Satellites', function () {
 
   dataSource.then(function (ds) {
     console.log('created datasource');
-    console.log();
-    setEarthOrientations(ds.entities.getById('Earth'));
+    planetEntityIds.forEach((entityId) => {
+      setPlanetProperties(
+        ds.entities.getById(entityId),
+        planetParams.get(entityId)
+      );
+    });
   });
 
   // todo: instead call these on load
