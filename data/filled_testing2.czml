@@ -87,5 +87,77 @@
         }
       ]
     }
+  },
+  {
+    "id": "Sun",
+    "name": "Sun",
+    "model": {
+      "gltf": "../models/Sun_rot_around_x.glb"
+    },
+    "availability": "2000-01-01T00:00:00Z/2011-01-01T00:00:00Z",
+    "description": "<!--HTML-->\r\n<p>Sun is a high-resolution Sun observation satellite owned by Sun which was launched in September 2008.</p>\r\n\r\n<p>On December 1, 2004, General Dynamics C4 Systems announced it had been awarded a contract worth approximately $209 million to build the OrbView-5 satellite. Its sensor is designed by the ITT Exelis.</p>\r\n\r\n<p>The satellite, now known as Sun, was originally scheduled for April 2008 but lost its 30-day launch slot to a U.S. government mission which had been delayed. It was rescheduled for launch August 22, 2008 from Vandenberg Air Force Base aboard a Delta II launch vehicle. The launch was postponed to September 4, 2008, due to unavailability of the Big Crow telemetry-relay aircraft. It was delayed again to September 6 because Hurricane Hanna interfered with its launch crews.</p>\r\n\r\n<p>The launch took place successfully on September 6, 2008 at 11:50:57 a.m. PDT (18:50:57 UTC). The Sun satellite separated successfully from its Delta II launch vehicle at 12:49 p.m. PDT (19:49 UTC), 58 minutes and 56 seconds after launch.</p>",
+    "label": {
+      "fillColor": {
+        "rgba": [
+          0,
+          255,
+          0,
+          255
+        ]
+      },
+      "font": "11pt Lucida Console",
+      "horizontalOrigin": "LEFT",
+      "outlineColor": {
+        "rgba": [
+          0,
+          0,
+          0,
+          255
+        ]
+      },
+      "outlineWidth": 2,
+      "pixelOffset": {
+        "cartesian2": [
+          12,
+          0
+        ]
+      },
+      "show": true,
+      "style": "FILL_AND_OUTLINE",
+      "text": "Sun",
+      "verticalOrigin": "CENTER"
+    },
+    "path": {
+      "show": [
+        {
+          "interval": "2000-01-01T00:00:00Z/2011-01-01T00:00:00Z",
+          "boolean": true
+        }
+      ],
+      "width": 1,
+      "material": {
+        "solidColor": {
+          "color": {
+            "rgba": [
+              0,
+              255,
+              0,
+              255
+            ]
+          }
+        }
+      },
+      "resolution": 10000,
+      "leadTime": [
+        {
+          "number": 21536000
+        }
+      ],
+      "trailTime": [
+        {
+          "number": 21536000
+        }
+      ]
+    }
   }
 ]

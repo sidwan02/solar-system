@@ -74,6 +74,25 @@ const earthParams = new Map([
   ['heading', -50],
 ]);
 
+const secs_in_yr = 31536000;
+
+const sunParams = new Map([
+  ['id', 'Sun'],
+  ['name', 'Sun'],
+  ['model_path', '../../models/Sun_rot_around_x.glb'],
+  ['availability', '2021-01-01T00:00:00Z/2022-01-01T00:00:00Z'],
+  ['description', ''],
+  ['helio_path', null],
+  // days
+  ['revolution_period', null],
+  // number of data points in each revolution
+  ['orbital_resolution', null],
+  // seconds
+  ['rotation_period', day_to_sec * 26.6],
+  ['axial_tilt', 90 - 7.25],
+  ['heading', 0],
+]);
+
 const au_to_m = 149597870700;
 const scale_factor = 1 / 10000;
 
@@ -95,204 +114,269 @@ function setPlanetProperties(planet_entity, planet_params) {
 
   var file_path = planet_params.get('helio_path');
 
-  var revolution_period = planet_params.get('revolution_period');
-  var orbital_resolution = planet_params.get('orbital_resolution');
+  if (planet_params.get('id') === 'Sun') {
+    var orientation_t = 0;
 
-  var stride = revolution_period / orbital_resolution;
+    var orientations = [];
 
-  var orientation_t = 0;
-  var position_t = 0;
-  // console.log('start: ' + start);
+    var num_orientations_per_pos = 0;
+    while (orientation_t <= secs_in_yr) {
+      // console.log('t: ' + t);
+      var time = Cesium.JulianDate.addSeconds(
+        start,
+        orientation_t,
+        new Cesium.JulianDate()
+      );
 
-  fetch(file_path)
-    .then((response) => response.text())
-    .then((data) => {
-      var lines = data.split('\n');
-      var num_points = 0;
+      // console.log('cur_angle: ' + cur_angle);
+      // console.log('orientation_t: ' + orientation_t);
+      // compute orientations
+      // depending on the scale factor, may need to change the heading.
+      var heading = Cesium.Math.toRadians(planet_params.get('heading'));
+      var pitch = Cesium.Math.toRadians(planet_params.get('axial_tilt'));
+      var roll = Cesium.Math.toRadians(cur_angle);
+      var hpRoll = new Cesium.HeadingPitchRoll(heading, pitch, roll);
+      // var orientation = Cesium.Transforms.headingPitchRollQuaternion(
+      //   position,
+      //   hpRoll
+      // );
+      var orientation = Cesium.Transforms.headingPitchRollQuaternion(
+        new Cesium.Cartesian3(0, 0, -6378137),
+        hpRoll
+      );
 
-      var orientations = [];
-      var coords = [];
+      // console.log(orientation);
+      // throw new Error('stop');
 
-      for (var i = 1; i < lines.length; i++) {
-        if ((i - 1) % Math.floor(stride) !== 0) {
-          continue;
-        }
-        var time = Cesium.JulianDate.addSeconds(
-          start,
-          position_t,
-          new Cesium.JulianDate()
-        );
+      orientations.push(orientation_t);
+      orientations.push(orientation.x);
+      orientations.push(orientation.y);
+      orientations.push(orientation.z);
+      orientations.push(orientation.w);
 
-        // console.log(time);
+      time = Cesium.JulianDate.addSeconds(
+        start,
+        orientation_t,
+        new Cesium.JulianDate()
+      );
 
-        num_points += 1;
+      orientationProperty.addSample(time, orientation);
+      // console.log(orientation);
 
-        var line = lines[i].trim().split(/\s+/);
-        // console.log('line: ' + line);
-        // var yr = parseFloat(line[0]);
-        // var day = parseFloat(line[1]);
-        var x = parseFloat(line[2]) * au_to_m * scale_factor;
-        var y = parseFloat(line[3]) * au_to_m * scale_factor;
-        var z = parseFloat(line[4]) * au_to_m * scale_factor;
-        // var x = 0;
-        // var y = 0;
-        // var z = 0;
-        // console.log('x: ' + x + ', y: ' + y + ', z: ' + z);
-        // throw new Error('stop');
+      cur_angle = (cur_angle + angle_increment) % 360;
 
-        var position = new Cesium.Cartesian3(x, y, z);
-        // var position = new Cesium.Cartesian3(0, 0, 0);
-        // var position = Cesium.Cartesian3.fromDegrees(100, 10, 1750);
+      orientation_t += rotation_period / (360 / angle_increment);
 
-        coords.push(position_t);
-        coords.push(x);
-        coords.push(y);
-        coords.push(z);
+      num_orientations_per_pos += 1;
+    }
 
-        positionProperty.addSample(time, position);
+    console.log('num_orientations_per_pos: ' + num_orientations_per_pos);
 
-        // console.log('new point: ' + x + ', ' + y + ', ' + z);
-        // console.log('new point t: ' + t);
+    console.log(orientations);
 
-        // add the rotations until the next position update.
-        next_position_t = position_t + day_to_sec * stride;
+    planet_entity.position = Cesium.Cartesian3.fromDegrees(0, 0, -6378137);
 
-        // console.log('next_position_t: ', next_position_t);
+    planet_entity.orientation = orientationProperty;
+  } else {
+    var revolution_period = planet_params.get('revolution_period');
+    var orbital_resolution = planet_params.get('orbital_resolution');
+    var stride = revolution_period / orbital_resolution;
 
-        var num_orientations_per_pos = 0;
-        while (orientation_t < next_position_t) {
-          // console.log('t: ' + t);
+    var orientation_t = 0;
+    var position_t = 0;
+    // console.log('start: ' + start);
+
+    fetch(file_path)
+      .then((response) => response.text())
+      .then((data) => {
+        var lines = data.split('\n');
+        var num_points = 0;
+
+        var orientations = [];
+        var coords = [];
+
+        for (var i = 1; i < lines.length; i++) {
+          if ((i - 1) % Math.floor(stride) !== 0) {
+            continue;
+          }
           var time = Cesium.JulianDate.addSeconds(
             start,
-            orientation_t,
+            position_t,
             new Cesium.JulianDate()
           );
 
-          // console.log('cur_angle: ' + cur_angle);
-          // console.log('orientation_t: ' + orientation_t);
-          // compute orientations
-          // depending on the scale factor, may need to change the heading.
-          var heading = Cesium.Math.toRadians(planet_params.get('heading'));
-          var pitch = Cesium.Math.toRadians(planet_params.get('axial_tilt'));
-          var roll = Cesium.Math.toRadians(cur_angle);
-          var hpRoll = new Cesium.HeadingPitchRoll(heading, pitch, roll);
-          var orientation = Cesium.Transforms.headingPitchRollQuaternion(
-            position,
-            hpRoll
-          );
-          // var orientation = Cesium.Transforms.headingPitchRollQuaternion(
-          //   new Cesium.Cartesian3(0, 0, 0),
-          //   hpRoll
-          // );
+          // console.log(time);
 
-          // console.log(orientation);
+          num_points += 1;
+
+          var line = lines[i].trim().split(/\s+/);
+          // console.log('line: ' + line);
+          // var yr = parseFloat(line[0]);
+          // var day = parseFloat(line[1]);
+          var x = parseFloat(line[2]) * au_to_m * scale_factor;
+          var y = parseFloat(line[3]) * au_to_m * scale_factor;
+          var z = parseFloat(line[4]) * au_to_m * scale_factor;
+          // var x = 0;
+          // var y = 0;
+          // var z = 0;
+          // console.log('x: ' + x + ', y: ' + y + ', z: ' + z);
           // throw new Error('stop');
 
-          orientations.push(orientation_t);
-          orientations.push(orientation.x);
-          orientations.push(orientation.y);
-          orientations.push(orientation.z);
-          orientations.push(orientation.w);
+          var position = new Cesium.Cartesian3(x, y, z);
+          // var position = new Cesium.Cartesian3(0, 0, -6378137 );
+          // var position = Cesium.Cartesian3.fromDegrees(100, 10, 1750);
 
-          time = Cesium.JulianDate.addSeconds(
-            start,
-            orientation_t,
-            new Cesium.JulianDate()
-          );
+          coords.push(position_t);
+          coords.push(x);
+          coords.push(y);
+          coords.push(z);
 
-          orientationProperty.addSample(time, orientation);
-          // console.log(orientation);
+          positionProperty.addSample(time, position);
 
-          cur_angle = (cur_angle + angle_increment) % 360;
+          // console.log('new point: ' + x + ', ' + y + ', ' + z);
+          // console.log('new point t: ' + t);
 
-          orientation_t += rotation_period / (360 / angle_increment);
+          // add the rotations until the next position update.
+          next_position_t = position_t + day_to_sec * stride;
 
-          num_orientations_per_pos += 1;
+          // console.log('next_position_t: ', next_position_t);
+
+          var num_orientations_per_pos = 0;
+          while (orientation_t < next_position_t) {
+            // console.log('t: ' + t);
+            var time = Cesium.JulianDate.addSeconds(
+              start,
+              orientation_t,
+              new Cesium.JulianDate()
+            );
+
+            // console.log('cur_angle: ' + cur_angle);
+            // console.log('orientation_t: ' + orientation_t);
+            // compute orientations
+            // depending on the scale factor, may need to change the heading.
+            var heading = Cesium.Math.toRadians(planet_params.get('heading'));
+            var pitch = Cesium.Math.toRadians(planet_params.get('axial_tilt'));
+            var roll = Cesium.Math.toRadians(cur_angle);
+            var hpRoll = new Cesium.HeadingPitchRoll(heading, pitch, roll);
+            var orientation = Cesium.Transforms.headingPitchRollQuaternion(
+              position,
+              hpRoll
+            );
+            // var orientation = Cesium.Transforms.headingPitchRollQuaternion(
+            //   new Cesium.Cartesian3(0, 0, -6378137 ),
+            //   hpRoll
+            // );
+
+            // console.log(orientation);
+            // throw new Error('stop');
+
+            orientations.push(orientation_t);
+            orientations.push(orientation.x);
+            orientations.push(orientation.y);
+            orientations.push(orientation.z);
+            orientations.push(orientation.w);
+
+            time = Cesium.JulianDate.addSeconds(
+              start,
+              orientation_t,
+              new Cesium.JulianDate()
+            );
+
+            orientationProperty.addSample(time, orientation);
+            // console.log(orientation);
+
+            cur_angle = (cur_angle + angle_increment) % 360;
+
+            orientation_t += rotation_period / (360 / angle_increment);
+
+            num_orientations_per_pos += 1;
+          }
+
+          console.log('num_orientations_per_pos: ' + num_orientations_per_pos);
+
+          position_t = next_position_t;
+          // console.log('next_position_t: ' + position_t);
+
+          // console.log('actual t: ' + t);
+          // if (position_t >= 630720) {
+          //   throw new Error('stop');
+          // }
         }
+        console.log('num_points: ' + num_points);
 
-        console.log('num_orientations_per_pos: ' + num_orientations_per_pos);
+        console.log('calculated points and orientations');
 
-        position_t = next_position_t;
-        // console.log('next_position_t: ' + position_t);
+        positionProperty.setInterpolationOptions({
+          interpolationDegree: 5,
+          interpolationAlgorithm: Cesium.LagrangePolynomialApproximation,
+        });
 
-        // console.log('actual t: ' + t);
-        // if (position_t >= 630720) {
-        //   throw new Error('stop');
-        // }
-      }
-      console.log('num_points: ' + num_points);
+        orientationProperty.setInterpolationOptions({
+          interpolationDegree: 1,
+          interpolationAlgorithm: Cesium.LinearApproximation,
+        });
 
-      console.log('calculated points and orientations');
+        console.log(coords);
+        console.log(orientations);
 
-      positionProperty.setInterpolationOptions({
-        interpolationDegree: 5,
-        interpolationAlgorithm: Cesium.LagrangePolynomialApproximation,
+        // console.log('about to add earth entity');
+
+        // console.log('positionProperty: ', positionProperty);
+
+        // var planet_entity = viewer.entities.add({
+        //   id: 'Earth',
+
+        //   //Set the entity availability to the same interval as the simulation time.
+        //   availability: new Cesium.TimeIntervalCollection([
+        //     new Cesium.TimeInterval({
+        //       start: start,
+        //       stop: stop,
+        //     }),
+        //   ]),
+
+        //   //Use our computed positions
+        //   // position: positionProperty,
+        //   // orientation: orientationProperty,
+
+        //   //Load the Cesium plane model to represent the entity
+        //   model: {
+        //     // uri: '../../models/Earth_1_12756.glb',
+        //     uri: '../../models/Earth_rot_around_x.glb',
+        //     minimumPixelSize: 64,
+        //   },
+
+        //   //Show the path as a pink line sampled in 1 second increments.
+        //   path: {
+        //     resolution: 1,
+        //     material: new Cesium.PolylineGlowMaterialProperty({
+        //       glowPower: 0.1,
+        //       color: Cesium.Color.YELLOW,
+        //     }),
+        //     width: 10,
+        //   },
+        // });
+        // console.log('created model');
+
+        console.log(positionProperty);
+        console.log(orientationProperty);
+
+        planet_entity.position = positionProperty;
+        // planet_entity.position = Cesium.Cartesian3.fromDegrees(0, 0, -6378137 );
+
+        planet_entity.orientation = orientationProperty;
+
+        viewer.trackedEntity = planet_entity;
+        // console.log(planet_entity.position);
+        // viewer.camera.flyTo(planet_entity.position);
+      })
+      .catch((error) => {
+        console.error('Error reading file:', error);
       });
-
-      orientationProperty.setInterpolationOptions({
-        interpolationDegree: 1,
-        interpolationAlgorithm: Cesium.LinearApproximation,
-      });
-
-      console.log(coords);
-      console.log(orientations);
-
-      // console.log('about to add earth entity');
-
-      // console.log('positionProperty: ', positionProperty);
-
-      // var planet_entity = viewer.entities.add({
-      //   id: 'Earth',
-
-      //   //Set the entity availability to the same interval as the simulation time.
-      //   availability: new Cesium.TimeIntervalCollection([
-      //     new Cesium.TimeInterval({
-      //       start: start,
-      //       stop: stop,
-      //     }),
-      //   ]),
-
-      //   //Use our computed positions
-      //   // position: positionProperty,
-      //   // orientation: orientationProperty,
-
-      //   //Load the Cesium plane model to represent the entity
-      //   model: {
-      //     // uri: '../../models/Earth_1_12756.glb',
-      //     uri: '../../models/Earth_rot_around_x.glb',
-      //     minimumPixelSize: 64,
-      //   },
-
-      //   //Show the path as a pink line sampled in 1 second increments.
-      //   path: {
-      //     resolution: 1,
-      //     material: new Cesium.PolylineGlowMaterialProperty({
-      //       glowPower: 0.1,
-      //       color: Cesium.Color.YELLOW,
-      //     }),
-      //     width: 10,
-      //   },
-      // });
-      // console.log('created model');
-
-      console.log(positionProperty);
-      console.log(orientationProperty);
-
-      planet_entity.position = positionProperty;
-      // planet_entity.position = Cesium.Cartesian3.fromDegrees(0, 0, 0);
-      planet_entity.orientation = orientationProperty;
-
-      viewer.trackedEntity = planet_entity;
-      // console.log(planet_entity.position);
-      // viewer.camera.flyTo(planet_entity.position);
-    })
-    .catch((error) => {
-      console.error('Error reading file:', error);
-    });
+  }
 }
 
 const planetEntityIds = [
-  // 'Sun',
+  'Sun',
   // 'Mercury',
   // 'Venus',
   'Earth',
@@ -305,7 +389,7 @@ const planetEntityIds = [
 ];
 
 const planetParams = new Map([
-  // ['Sun', sunParams],
+  ['Sun', sunParams],
   // ['Mercury', mercuryParams],
   // ['Venus', venusParams],
   ['Earth', earthParams],
