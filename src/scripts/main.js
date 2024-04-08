@@ -95,7 +95,7 @@ const sunParams = new Map([
   // days
   ['revolution_period', null],
   // number of data points in each revolution
-  ['orbital_resolution', 100],
+  ['orbital_resolution', null],
   // seconds
   ['rotation_period', day_to_sec * 26.6],
   ['axial_tilt', 90 - 7.25],
@@ -234,7 +234,7 @@ const plutoParams = new Map([
 ]);
 
 const au_to_m = 149597870700;
-const scale_factor = 1 / 10000;
+const scale_factor = 1 / 20000;
 
 function setPlanetProperties(planet_entity, planet_params) {
   // planet_entity.enableLighting = false;
@@ -462,7 +462,7 @@ function setPlanetProperties(planet_entity, planet_params) {
         console.log('calculated points and orientations');
 
         positionProperty.setInterpolationOptions({
-          interpolationDegree: 1,
+          interpolationDegree: 5,
           interpolationAlgorithm: Cesium.LagrangePolynomialApproximation,
         });
 
@@ -512,6 +512,18 @@ function setPlanetProperties(planet_entity, planet_params) {
         // });
         // console.log('created model');
 
+        var fadedLine = new Cesium.StripeMaterialProperty({
+          // The newest part of the line is bright yellow.
+          evenColor: Cesium.Color.YELLOW,
+          // The oldest part of the line is yellow with a low alpha value.
+          oddColor: Cesium.Color.YELLOW.withAlpha(0.2),
+          repeat: 1,
+          offset: 0.25,
+          orientation: Cesium.StripeOrientation.VERTICAL,
+        });
+
+        planet_entity.path.material = fadedLine;
+
         console.log(positionProperty);
         console.log(orientationProperty);
 
@@ -520,11 +532,12 @@ function setPlanetProperties(planet_entity, planet_params) {
 
         planet_entity.orientation = orientationProperty;
 
-        planet_entity.path.leadTime = new Cesium.ConstantProperty(
-          Math.min(revolution_period * day_to_sec, 10 * secs_in_yr)
-        );
+        // planet_entity.path.leadTime = new Cesium.ConstantProperty(
+        //   Math.min((revolution_period * day_to_sec) / 2, 2 * secs_in_yr)
+        // );
+        planet_entity.path.leadTime = new Cesium.ConstantProperty(0);
         planet_entity.path.trailTime = new Cesium.ConstantProperty(
-          Math.min(revolution_period * day_to_sec, 10 * secs_in_yr)
+          Math.min(revolution_period * day_to_sec, 2 * secs_in_yr)
         );
 
         // viewer.trackedEntity = planet_entity;
@@ -564,14 +577,9 @@ const planetParams = new Map([
 ]);
 
 Sandcastle.addDefaultToolbarButton('Satellites', function () {
-  var dataSource = Cesium.CzmlDataSource.load(
-    '../../data/filled_testing2.czml'
-  );
+  var dataSource = Cesium.CzmlDataSource.load('../../data/template.czml');
 
-  viewer.dataSources.add(
-    // Cesium.CzmlDataSource.load('../../czml/testing2.czml')
-    dataSource
-  );
+  viewer.dataSources.add(dataSource);
 
   dataSource.then(function (ds) {
     console.log('created datasource');

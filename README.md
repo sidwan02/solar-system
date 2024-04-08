@@ -107,4 +107,9 @@ Sun Lighting:
 - https://sandcastle.cesium.com/?src=Image-Based%20Lighting.html
 - https://groups.google.com/g/cesium-dev/c/XbeJ1fRlKAA/m/NhlUtL-CBAAJ
 - https://github.com/CesiumGS/cesium/issues/8518
+
   - There is no way to get point source light
+
+  Trailing leading time:
+
+  - https://stackoverflow.com/questions/50910342/cesium-is-it-possible-to-make-the-trailing-path-thinner
