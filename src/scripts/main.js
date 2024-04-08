@@ -76,7 +76,7 @@ const earthParams = new Map([
   // days
   ['revolution_period', 365],
   // number of data points in each revolution
-  ['orbital_resolution', 365],
+  ['orbital_resolution', 100],
   // seconds
   ['rotation_period', 23.9 * hr_to_sec],
   ['axial_tilt', 23.5],
@@ -95,7 +95,7 @@ const sunParams = new Map([
   // days
   ['revolution_period', null],
   // number of data points in each revolution
-  ['orbital_resolution', null],
+  ['orbital_resolution', 100],
   // seconds
   ['rotation_period', day_to_sec * 26.6],
   ['axial_tilt', 90 - 7.25],
@@ -129,7 +129,7 @@ const venusParams = new Map([
   // days
   ['revolution_period', 224],
   // number of data points in each revolution
-  ['orbital_resolution', 224],
+  ['orbital_resolution', 100],
   // seconds
   ['rotation_period', 5832.5 * hr_to_sec],
   ['axial_tilt', 177.4],
@@ -146,7 +146,7 @@ const marsParams = new Map([
   // days
   ['revolution_period', 687],
   // number of data points in each revolution
-  ['orbital_resolution', 400],
+  ['orbital_resolution', 100],
   // seconds
   ['rotation_period', 24.6 * hr_to_sec],
   ['axial_tilt', 25.2],
@@ -162,7 +162,7 @@ const jupiterParams = new Map([
   // days
   ['revolution_period', 4331],
   // number of data points in each revolution
-  ['orbital_resolution', 400],
+  ['orbital_resolution', 100],
   // seconds
   ['rotation_period', 9.9 * hr_to_sec],
   ['axial_tilt', 3.1],
@@ -178,7 +178,7 @@ const saturnParams = new Map([
   // days
   ['revolution_period', 10747],
   // number of data points in each revolution
-  ['orbital_resolution', 400],
+  ['orbital_resolution', 100],
   // seconds
   ['rotation_period', 10.7 * hr_to_sec],
   ['axial_tilt', 26.7],
@@ -194,7 +194,7 @@ const uranusParams = new Map([
   // days
   ['revolution_period', 30589],
   // number of data points in each revolution
-  ['orbital_resolution', 400],
+  ['orbital_resolution', 100],
   // seconds
   ['rotation_period', 17.2 * hr_to_sec],
   ['axial_tilt', 97.8],
@@ -210,7 +210,7 @@ const neptuneParams = new Map([
   // days
   ['revolution_period', 59800],
   // number of data points in each revolution
-  ['orbital_resolution', 400],
+  ['orbital_resolution', 100],
   // seconds
   ['rotation_period', 16.1 * hr_to_sec],
   ['axial_tilt', 28.3],
@@ -226,7 +226,7 @@ const plutoParams = new Map([
   // days
   ['revolution_period', 90560],
   // number of data points in each revolution
-  ['orbital_resolution', 400],
+  ['orbital_resolution', 100],
   // seconds
   ['rotation_period', 153.3 * hr_to_sec],
   ['axial_tilt', 119.5],
@@ -520,8 +520,15 @@ function setPlanetProperties(planet_entity, planet_params) {
 
         planet_entity.orientation = orientationProperty;
 
-        viewer.trackedEntity = planet_entity;
-        // console.log(planet_entity.position);
+        planet_entity.path.leadTime = new Cesium.ConstantProperty(
+          Math.min(revolution_period * day_to_sec, 10 * secs_in_yr)
+        );
+        planet_entity.path.trailTime = new Cesium.ConstantProperty(
+          Math.min(revolution_period * day_to_sec, 10 * secs_in_yr)
+        );
+
+        // viewer.trackedEntity = planet_entity;
+        console.log('lead time: ', planet_entity.path.leadTime);
         // viewer.camera.flyTo(planet_entity.position);
       })
       .catch((error) => {
@@ -537,10 +544,10 @@ const planetEntityIds = [
   'Earth',
   'Mars',
   'Jupiter',
-  // 'Saturn',
-  // 'Uranus',
-  // 'Neptune  ',
-  // 'Pluto',
+  'Saturn',
+  'Uranus',
+  'Neptune',
+  'Pluto',
 ];
 
 const planetParams = new Map([
@@ -550,10 +557,10 @@ const planetParams = new Map([
   ['Earth', earthParams],
   ['Mars', marsParams],
   ['Jupiter', jupiterParams],
-  // ['Saturn', saturnParams],
-  // ['Uranus', uranusParams],
-  // ['Neptune', neptuneParams],
-  // ['Pluto', plutoParams]
+  ['Saturn', saturnParams],
+  ['Uranus', uranusParams],
+  ['Neptune', neptuneParams],
+  ['Pluto', plutoParams],
 ]);
 
 Sandcastle.addDefaultToolbarButton('Satellites', function () {
