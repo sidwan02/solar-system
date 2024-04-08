@@ -95,3 +95,16 @@ Access entities from datasource
 Update czml from js
 
 - https://groups.google.com/g/cesium-dev/c/5WaK5vgNaSI
+
+https://nssdc.gsfc.nasa.gov/planetary/factsheet/
+
+- Planetary factsheet
+
+Sun Lighting:
+
+- https://sandcastle.cesium.com/?src=Lighting.html
+- https://github.com/CesiumGS/cesium/blob/1.116/packages/engine/Source/Scene/SunLight.js#L28
+- https://sandcastle.cesium.com/?src=Image-Based%20Lighting.html
+- https://groups.google.com/g/cesium-dev/c/XbeJ1fRlKAA/m/NhlUtL-CBAAJ
+- https://github.com/CesiumGS/cesium/issues/8518
+  - There is no way to get point source light

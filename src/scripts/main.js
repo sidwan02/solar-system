@@ -13,7 +13,10 @@ function icrf(scene, time) {
   // when it's nothing, it's undefined. When it's the Earth, the _id is 'Earth'
   // Might have to change this to be neither undefined nor 'Sun'
   if (viewer.trackedEntity != undefined) {
+    console.log('not icrf');
     return;
+  } else {
+    console.log('icrf');
   }
 
   const icrfToFixed = Cesium.Transforms.computeIcrfToFixedMatrix(time);
@@ -34,9 +37,12 @@ function viewInICRF() {
 function setupViewer() {
   scene.fog.enabled = false;
   scene.moon.show = false;
-  scene.sun.show = false;
+  // scene.sun.show = false;
   scene.shadowMap.enabled = false;
   scene.globe.enableLighting = false;
+  // scene.highDynamicRange = false;
+
+  viewer.li;
 }
 
 var start = Cesium.JulianDate.fromDate(new Date(Date.UTC(2000, 0, 1)));
@@ -55,13 +61,16 @@ function clockSetup() {
   viewer.timeline.zoomTo(start, stop);
 }
 
+// TODO: need to add capability to incremement i in the file fetch based on the diff in days from the data file (eg if the pluto datasheet has data of every 10 days then must account for that when dealing with orbital resolution).
+
 const day_to_sec = 86400;
+const hr_to_sec = 3600;
 
 const earthParams = new Map([
   ['id', 'Earth'],
   ['name', 'Earth'],
   ['model_path', '../models/Earth_1_12756.glb'],
-  ['availability', '2021-01-01T00:00:00Z/2022-01-01T00:00:00Z'],
+  ['availability', '2000-01-01T00:00:00Z/2001-01-01T00:00:00Z'],
   ['description', ''],
   ['helio_path', '../../data/earth_helios_bgaiRcAjxg.lst'],
   // days
@@ -69,9 +78,9 @@ const earthParams = new Map([
   // number of data points in each revolution
   ['orbital_resolution', 365],
   // seconds
-  ['rotation_period', day_to_sec],
+  ['rotation_period', 23.9 * hr_to_sec],
   ['axial_tilt', 23.5],
-  ['heading', -50],
+  ['heading', -90],
 ]);
 
 const secs_in_yr = 31536000;
@@ -80,7 +89,7 @@ const sunParams = new Map([
   ['id', 'Sun'],
   ['name', 'Sun'],
   ['model_path', '../../models/Sun_rot_around_x.glb'],
-  ['availability', '2021-01-01T00:00:00Z/2022-01-01T00:00:00Z'],
+  ['availability', '2000-01-01T00:00:00Z/2001-01-01T00:00:00Z'],
   ['description', ''],
   ['helio_path', null],
   // days
@@ -93,10 +102,149 @@ const sunParams = new Map([
   ['heading', 0],
 ]);
 
+const mercuryParams = new Map([
+  ['id', 'Mercury'],
+  ['name', 'Mercury'],
+  ['model_path', '../../models/Mercury_rot_around_x.glb'],
+  ['availability', '2000-01-01T00:00:00Z/2001-01-01T00:00:00Z'],
+  ['description', ''],
+  ['helio_path', '../../data/mercury_helios_Mp1LCBc0KB.lst'],
+  // days
+  ['revolution_period', 88],
+  // number of data points in each revolution
+  ['orbital_resolution', 88],
+  // seconds
+  ['rotation_period', 1407.6 * hr_to_sec],
+  ['axial_tilt', 0.01],
+  ['heading', -90],
+]);
+// TODO: need to do venus mars and jupiter
+const venusParams = new Map([
+  ['id', 'Venus'],
+  ['name', 'Venus'],
+  ['model_path', '../../models/Venus_rot_around_x.glb'],
+  ['availability', '2000-01-01T00:00:00Z/2001-01-01T00:00:00Z'],
+  ['description', ''],
+  ['helio_path', '../../data/venus_helios_gnv2GCHrIo.lst'],
+  // days
+  ['revolution_period', 224],
+  // number of data points in each revolution
+  ['orbital_resolution', 224],
+  // seconds
+  ['rotation_period', 5832.5 * hr_to_sec],
+  ['axial_tilt', 177.4],
+  ['heading', -90],
+]);
+
+const marsParams = new Map([
+  ['id', 'Mars'],
+  ['name', 'Mars'],
+  ['model_path', '../../models/Mars_rot_around_x.glb'],
+  ['availability', '2000-01-01T00:00:00Z/2001-01-01T00:00:00Z'],
+  ['description', ''],
+  ['helio_path', '../../data/mars_helios_TUWUmyIbQB.lst'],
+  // days
+  ['revolution_period', 687],
+  // number of data points in each revolution
+  ['orbital_resolution', 400],
+  // seconds
+  ['rotation_period', 24.6 * hr_to_sec],
+  ['axial_tilt', 25.2],
+  ['heading', -90],
+]);
+const jupiterParams = new Map([
+  ['id', 'Jupiter'],
+  ['name', 'Jupiter'],
+  ['model_path', '../../models/Jupiter_rot_around_x.glb'],
+  ['availability', '2000-01-01T00:00:00Z/2001-01-01T00:00:00Z'],
+  ['description', ''],
+  ['helio_path', '../../data/jupiter_helios_Lo61p_mGMD.lst'],
+  // days
+  ['revolution_period', 4331],
+  // number of data points in each revolution
+  ['orbital_resolution', 400],
+  // seconds
+  ['rotation_period', 9.9 * hr_to_sec],
+  ['axial_tilt', 3.1],
+  ['heading', -90],
+]);
+const saturnParams = new Map([
+  ['id', 'Saturn'],
+  ['name', 'Saturn'],
+  ['model_path', '../../models/Saturn_rot_around_x.glb'],
+  ['availability', '2000-01-01T00:00:00Z/2001-01-01T00:00:00Z'],
+  ['description', ''],
+  ['helio_path', '../../data/saturn_helios_w__aG_TW9W.lst'],
+  // days
+  ['revolution_period', 10747],
+  // number of data points in each revolution
+  ['orbital_resolution', 400],
+  // seconds
+  ['rotation_period', 10.7 * hr_to_sec],
+  ['axial_tilt', 26.7],
+  ['heading', -90],
+]);
+const uranusParams = new Map([
+  ['id', 'Uranus'],
+  ['name', 'Uranus'],
+  ['model_path', '../../models/Uranus_rot_around_x.glb'],
+  ['availability', '2000-01-01T00:00:00Z/2001-01-01T00:00:00Z'],
+  ['description', ''],
+  ['helio_path', '../../data/uranus_helios_9gBjTz_lJA.lst'],
+  // days
+  ['revolution_period', 30589],
+  // number of data points in each revolution
+  ['orbital_resolution', 400],
+  // seconds
+  ['rotation_period', 17.2 * hr_to_sec],
+  ['axial_tilt', 97.8],
+  ['heading', -90],
+]);
+const neptuneParams = new Map([
+  ['id', 'Neptune'],
+  ['name', 'Neptune'],
+  ['model_path', '../../models/Neptune_rot_around_x.glb'],
+  ['availability', '2000-01-01T00:00:00Z/2001-01-01T00:00:00Z'],
+  ['description', ''],
+  ['helio_path', '../../data/neptune_helios_Uk1SK6w8f_.lst'],
+  // days
+  ['revolution_period', 59800],
+  // number of data points in each revolution
+  ['orbital_resolution', 400],
+  // seconds
+  ['rotation_period', 16.1 * hr_to_sec],
+  ['axial_tilt', 28.3],
+  ['heading', -90],
+]);
+const plutoParams = new Map([
+  ['id', 'Pluto'],
+  ['name', 'Pluto'],
+  ['model_path', '../../models/Pluto_rot_around_x.glb'],
+  ['availability', '2000-01-01T00:00:00Z/2001-01-01T00:00:00Z'],
+  ['description', ''],
+  ['helio_path', '../../data/pluto_helios_B61wAOJLdE.lst'],
+  // days
+  ['revolution_period', 90560],
+  // number of data points in each revolution
+  ['orbital_resolution', 400],
+  // seconds
+  ['rotation_period', 153.3 * hr_to_sec],
+  ['axial_tilt', 119.5],
+  ['heading', -90],
+]);
+
 const au_to_m = 149597870700;
 const scale_factor = 1 / 10000;
 
 function setPlanetProperties(planet_entity, planet_params) {
+  // planet_entity.enableLighting = false;
+
+  console.log('ibl', planet_entity._model);
+  // planet_entity._model.imageBasedLightingFactor = new Cesium.Cartesian2(2, 2);
+  // planet_entity._model.luminanceAtZenith = 10;
+
+  // console.log('planet_entity: ', planet_entity);
+  // console.log('planet_params: ', planet_params);
   // console.log(viewer.dataSources);
   // var entity = viewer.entities.getById('Earth');
   // console.log(entity);
@@ -195,6 +343,13 @@ function setPlanetProperties(planet_entity, planet_params) {
         var orientations = [];
         var coords = [];
 
+        // number of days incremented in each line.
+        day_incr =
+          parseInt(lines[2].trim().split(/\s+/)[1]) -
+          parseInt(lines[1].trim().split(/\s+/)[1]);
+
+        console.log('day_incr: ' + day_incr);
+
         for (var i = 1; i < lines.length; i++) {
           if ((i - 1) % Math.floor(stride) !== 0) {
             continue;
@@ -292,7 +447,7 @@ function setPlanetProperties(planet_entity, planet_params) {
             num_orientations_per_pos += 1;
           }
 
-          console.log('num_orientations_per_pos: ' + num_orientations_per_pos);
+          // console.log('num_orientations_per_pos: ' + num_orientations_per_pos);
 
           position_t = next_position_t;
           // console.log('next_position_t: ' + position_t);
@@ -307,7 +462,7 @@ function setPlanetProperties(planet_entity, planet_params) {
         console.log('calculated points and orientations');
 
         positionProperty.setInterpolationOptions({
-          interpolationDegree: 5,
+          interpolationDegree: 1,
           interpolationAlgorithm: Cesium.LagrangePolynomialApproximation,
         });
 
@@ -377,11 +532,11 @@ function setPlanetProperties(planet_entity, planet_params) {
 
 const planetEntityIds = [
   'Sun',
-  // 'Mercury',
-  // 'Venus',
+  'Mercury',
+  'Venus',
   'Earth',
-  // 'Mars',
-  // 'Jupiter',
+  'Mars',
+  'Jupiter',
   // 'Saturn',
   // 'Uranus',
   // 'Neptune  ',
@@ -390,11 +545,11 @@ const planetEntityIds = [
 
 const planetParams = new Map([
   ['Sun', sunParams],
-  // ['Mercury', mercuryParams],
-  // ['Venus', venusParams],
+  ['Mercury', mercuryParams],
+  ['Venus', venusParams],
   ['Earth', earthParams],
-  // ['Mars', marsParams],
-  // ['Jupiter', jupiterParams],
+  ['Mars', marsParams],
+  ['Jupiter', jupiterParams],
   // ['Saturn', saturnParams],
   // ['Uranus', uranusParams],
   // ['Neptune', neptuneParams],
@@ -421,8 +576,29 @@ Sandcastle.addDefaultToolbarButton('Satellites', function () {
     });
   });
 
+  scene.skyBox.destroy();
+  scene.skyBox = undefined;
+  scene.sun.destroy();
+  scene.sun = undefined;
+  // scene.sunbloom = false;
+  // var sunLight = new Cesium.SunLight();
+  // sunLight.intensity = 0.01;
+  // sunLight.direction = new Cartesian3(0, 0, 0);
+
+  // TODO: play around with this.
+  const customLight = new Cesium.DirectionalLight({
+    direction: new Cesium.Cartesian3(0, 0, -10000000),
+    color: Cesium.Color.fromCssColorString('#FFFFFF'),
+    intensity: 2,
+  });
+
+  scene.light = customLight;
+  // scene.light = sunLight;
+
+  console.log('scene: ', scene);
+
   // todo: instead call these on load
-  viewInICRF();
+  // viewInICRF();
 
   //setup the clock
   clockSetup();

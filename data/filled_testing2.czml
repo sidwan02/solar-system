@@ -78,12 +78,12 @@
       "resolution": 10000,
       "leadTime": [
         {
-          "number": 21536000
+          "number": 31536000
         }
       ],
       "trailTime": [
         {
-          "number": 21536000
+          "number": 31536000
         }
       ]
     }
@@ -156,6 +156,294 @@
       "trailTime": [
         {
           "number": 21536000
+        }
+      ]
+    }
+  },
+  {
+    "id": "Mercury",
+    "name": "Mercury",
+    "model": {
+      "gltf": "../models/Mercury_rot_around_x.glb"
+    },
+    "availability": "2000-01-01T00:00:00Z/2011-01-01T00:00:00Z",
+    "description": "<!--HTML-->\r\n<p>Mercury is a high-resolution Mercury observation satellite owned by Mercury which was launched in September 2008.</p>\r\n\r\n<p>On December 1, 2004, General Dynamics C4 Systems announced it had been awarded a contract worth approximately $209 million to build the OrbView-5 satellite. Its sensor is designed by the ITT Exelis.</p>\r\n\r\n<p>The satellite, now known as Mercury, was originally scheduled for April 2008 but lost its 30-day launch slot to a U.S. government mission which had been delayed. It was rescheduled for launch August 22, 2008 from Vandenberg Air Force Base aboard a Delta II launch vehicle. The launch was postponed to September 4, 2008, due to unavailability of the Big Crow telemetry-relay aircraft. It was delayed again to September 6 because Hurricane Hanna interfered with its launch crews.</p>\r\n\r\n<p>The launch took place successfully on September 6, 2008 at 11:50:57 a.m. PDT (18:50:57 UTC). The Mercury satellite separated successfully from its Delta II launch vehicle at 12:49 p.m. PDT (19:49 UTC), 58 minutes and 56 seconds after launch.</p>",
+    "label": {
+      "fillColor": {
+        "rgba": [
+          0,
+          255,
+          0,
+          255
+        ]
+      },
+      "font": "11pt Lucida Console",
+      "horizontalOrigin": "LEFT",
+      "outlineColor": {
+        "rgba": [
+          0,
+          0,
+          0,
+          255
+        ]
+      },
+      "outlineWidth": 2,
+      "pixelOffset": {
+        "cartesian2": [
+          12,
+          0
+        ]
+      },
+      "show": true,
+      "style": "FILL_AND_OUTLINE",
+      "text": "Mercury",
+      "verticalOrigin": "CENTER"
+    },
+    "path": {
+      "show": [
+        {
+          "interval": "2000-01-01T00:00:00Z/2011-01-01T00:00:00Z",
+          "boolean": true
+        }
+      ],
+      "width": 1,
+      "material": {
+        "solidColor": {
+          "color": {
+            "rgba": [
+              0,
+              255,
+              0,
+              255
+            ]
+          }
+        }
+      },
+      "resolution": 10000,
+      "leadTime": [
+        {
+          "number": 7603200
+        }
+      ],
+      "trailTime": [
+        {
+          "number": 7603200
+        }
+      ]
+    }
+  },
+  {
+    "id": "Venus",
+    "name": "Venus",
+    "model": {
+      "gltf": "../models/Venus_rot_around_x.glb"
+    },
+    "availability": "2000-01-01T00:00:00Z/2011-01-01T00:00:00Z",
+    "description": "<!--HTML-->\r\n<p>Venus is a high-resolution Venus observation satellite owned by Venus which was launched in September 2008.</p>\r\n\r\n<p>On December 1, 2004, General Dynamics C4 Systems announced it had been awarded a contract worth approximately $209 million to build the OrbView-5 satellite. Its sensor is designed by the ITT Exelis.</p>\r\n\r\n<p>The satellite, now known as Venus, was originally scheduled for April 2008 but lost its 30-day launch slot to a U.S. government mission which had been delayed. It was rescheduled for launch August 22, 2008 from Vandenberg Air Force Base aboard a Delta II launch vehicle. The launch was postponed to September 4, 2008, due to unavailability of the Big Crow telemetry-relay aircraft. It was delayed again to September 6 because Hurricane Hanna interfered with its launch crews.</p>\r\n\r\n<p>The launch took place successfully on September 6, 2008 at 11:50:57 a.m. PDT (18:50:57 UTC). The Venus satellite separated successfully from its Delta II launch vehicle at 12:49 p.m. PDT (19:49 UTC), 58 minutes and 56 seconds after launch.</p>",
+    "label": {
+      "fillColor": {
+        "rgba": [
+          0,
+          255,
+          0,
+          255
+        ]
+      },
+      "font": "11pt Lucida Console",
+      "horizontalOrigin": "LEFT",
+      "outlineColor": {
+        "rgba": [
+          0,
+          0,
+          0,
+          255
+        ]
+      },
+      "outlineWidth": 2,
+      "pixelOffset": {
+        "cartesian2": [
+          12,
+          0
+        ]
+      },
+      "show": true,
+      "style": "FILL_AND_OUTLINE",
+      "text": "Venus",
+      "verticalOrigin": "CENTER"
+    },
+    "path": {
+      "show": [
+        {
+          "interval": "2000-01-01T00:00:00Z/2011-01-01T00:00:00Z",
+          "boolean": true
+        }
+      ],
+      "width": 1,
+      "material": {
+        "solidColor": {
+          "color": {
+            "rgba": [
+              0,
+              255,
+              0,
+              255
+            ]
+          }
+        }
+      },
+      "resolution": 10000,
+      "leadTime": [
+        {
+          "number": 7603200
+        }
+      ],
+      "trailTime": [
+        {
+          "number": 7603200
+        }
+      ]
+    }
+  },
+  {
+    "id": "Mars",
+    "name": "Mars",
+    "model": {
+      "gltf": "../models/Mars_rot_around_x.glb"
+    },
+    "availability": "2000-01-01T00:00:00Z/2011-01-01T00:00:00Z",
+    "description": "<!--HTML-->\r\n<p>Mars is a high-resolution Mars observation satellite owned by Mars which was launched in September 2008.</p>\r\n\r\n<p>On December 1, 2004, General Dynamics C4 Systems announced it had been awarded a contract worth approximately $209 million to build the OrbView-5 satellite. Its sensor is designed by the ITT Exelis.</p>\r\n\r\n<p>The satellite, now known as Mars, was originally scheduled for April 2008 but lost its 30-day launch slot to a U.S. government mission which had been delayed. It was rescheduled for launch August 22, 2008 from Vandenberg Air Force Base aboard a Delta II launch vehicle. The launch was postponed to September 4, 2008, due to unavailability of the Big Crow telemetry-relay aircraft. It was delayed again to September 6 because Hurricane Hanna interfered with its launch crews.</p>\r\n\r\n<p>The launch took place successfully on September 6, 2008 at 11:50:57 a.m. PDT (18:50:57 UTC). The Mars satellite separated successfully from its Delta II launch vehicle at 12:49 p.m. PDT (19:49 UTC), 58 minutes and 56 seconds after launch.</p>",
+    "label": {
+      "fillColor": {
+        "rgba": [
+          0,
+          255,
+          0,
+          255
+        ]
+      },
+      "font": "11pt Lucida Console",
+      "horizontalOrigin": "LEFT",
+      "outlineColor": {
+        "rgba": [
+          0,
+          0,
+          0,
+          255
+        ]
+      },
+      "outlineWidth": 2,
+      "pixelOffset": {
+        "cartesian2": [
+          12,
+          0
+        ]
+      },
+      "show": true,
+      "style": "FILL_AND_OUTLINE",
+      "text": "Mars",
+      "verticalOrigin": "CENTER"
+    },
+    "path": {
+      "show": [
+        {
+          "interval": "2000-01-01T00:00:00Z/2011-01-01T00:00:00Z",
+          "boolean": true
+        }
+      ],
+      "width": 1,
+      "material": {
+        "solidColor": {
+          "color": {
+            "rgba": [
+              0,
+              255,
+              0,
+              255
+            ]
+          }
+        }
+      },
+      "resolution": 10000,
+      "leadTime": [
+        {
+          "number": 7603200
+        }
+      ],
+      "trailTime": [
+        {
+          "number": 7603200
+        }
+      ]
+    }
+  },
+  {
+    "id": "Jupiter",
+    "name": "Jupiter",
+    "model": {
+      "gltf": "../models/Jupiter_rot_around_x.glb"
+    },
+    "availability": "2000-01-01T00:00:00Z/2011-01-01T00:00:00Z",
+    "description": "<!--HTML-->\r\n<p>Jupiter is a high-resolution Jupiter observation satellite owned by Jupiter which was launched in September 2008.</p>\r\n\r\n<p>On December 1, 2004, General Dynamics C4 Systems announced it had been awarded a contract worth approximately $209 million to build the OrbView-5 satellite. Its sensor is designed by the ITT Exelis.</p>\r\n\r\n<p>The satellite, now known as Jupiter, was originally scheduled for April 2008 but lost its 30-day launch slot to a U.S. government mission which had been delayed. It was rescheduled for launch August 22, 2008 from Vandenberg Air Force Base aboard a Delta II launch vehicle. The launch was postponed to September 4, 2008, due to unavailability of the Big Crow telemetry-relay aircraft. It was delayed again to September 6 because Hurricane Hanna interfered with its launch crews.</p>\r\n\r\n<p>The launch took place successfully on September 6, 2008 at 11:50:57 a.m. PDT (18:50:57 UTC). The Jupiter satellite separated successfully from its Delta II launch vehicle at 12:49 p.m. PDT (19:49 UTC), 58 minutes and 56 seconds after launch.</p>",
+    "label": {
+      "fillColor": {
+        "rgba": [
+          0,
+          255,
+          0,
+          255
+        ]
+      },
+      "font": "11pt Lucida Console",
+      "horizontalOrigin": "LEFT",
+      "outlineColor": {
+        "rgba": [
+          0,
+          0,
+          0,
+          255
+        ]
+      },
+      "outlineWidth": 2,
+      "pixelOffset": {
+        "cartesian2": [
+          12,
+          0
+        ]
+      },
+      "show": true,
+      "style": "FILL_AND_OUTLINE",
+      "text": "Jupiter",
+      "verticalOrigin": "CENTER"
+    },
+    "path": {
+      "show": [
+        {
+          "interval": "2000-01-01T00:00:00Z/2011-01-01T00:00:00Z",
+          "boolean": true
+        }
+      ],
+      "width": 1,
+      "material": {
+        "solidColor": {
+          "color": {
+            "rgba": [
+              0,
+              255,
+              0,
+              255
+            ]
+          }
+        }
+      },
+      "resolution": 10000,
+      "leadTime": [
+        {
+          "number": 7603200
+        }
+      ],
+      "trailTime": [
+        {
+          "number": 7603200
         }
       ]
     }
