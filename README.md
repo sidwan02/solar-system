@@ -113,3 +113,5 @@ Sun Lighting:
   Trailing leading time:
 
   - https://stackoverflow.com/questions/50910342/cesium-is-it-possible-to-make-the-trailing-path-thinner
+
+<!-- TODo: rotations stop after the first year, why -->
