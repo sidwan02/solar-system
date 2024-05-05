@@ -72,7 +72,7 @@ const earthParams = new Map([
   ['model_path', '../models/Earth_1_12756.glb'],
   ['availability', '2000-01-01T00:00:00Z/2001-01-01T00:00:00Z'],
   ['description', ''],
-  ['helio_path', '../../data/earth_helios_bgaiRcAjxg.lst'],
+  ['helio_path', 'data/earth_helios_bgaiRcAjxg.lst'],
   // days
   ['revolution_period', 365],
   // number of data points in each revolution
@@ -88,7 +88,7 @@ const secs_in_yr = 31536000;
 const sunParams = new Map([
   ['id', 'Sun'],
   ['name', 'Sun'],
-  ['model_path', '../../models/Sun_rot_around_x.glb'],
+  ['model_path', 'models/Sun_rot_around_x.glb'],
   ['availability', '2000-01-01T00:00:00Z/2001-01-01T00:00:00Z'],
   ['description', ''],
   ['helio_path', null],
@@ -105,10 +105,10 @@ const sunParams = new Map([
 const mercuryParams = new Map([
   ['id', 'Mercury'],
   ['name', 'Mercury'],
-  ['model_path', '../../models/Mercury_rot_around_x.glb'],
+  ['model_path', 'models/Mercury_rot_around_x.glb'],
   ['availability', '2000-01-01T00:00:00Z/2001-01-01T00:00:00Z'],
   ['description', ''],
-  ['helio_path', '../../data/mercury_helios_Mp1LCBc0KB.lst'],
+  ['helio_path', 'data/mercury_helios_Mp1LCBc0KB.lst'],
   // days
   ['revolution_period', 88],
   // number of data points in each revolution
@@ -122,10 +122,10 @@ const mercuryParams = new Map([
 const venusParams = new Map([
   ['id', 'Venus'],
   ['name', 'Venus'],
-  ['model_path', '../../models/Venus_rot_around_x.glb'],
+  ['model_path', 'models/Venus_rot_around_x.glb'],
   ['availability', '2000-01-01T00:00:00Z/2001-01-01T00:00:00Z'],
   ['description', ''],
-  ['helio_path', '../../data/venus_helios_gnv2GCHrIo.lst'],
+  ['helio_path', 'data/venus_helios_gnv2GCHrIo.lst'],
   // days
   ['revolution_period', 224],
   // number of data points in each revolution
@@ -139,10 +139,10 @@ const venusParams = new Map([
 const marsParams = new Map([
   ['id', 'Mars'],
   ['name', 'Mars'],
-  ['model_path', '../../models/Mars_rot_around_x.glb'],
+  ['model_path', 'models/Mars_rot_around_x.glb'],
   ['availability', '2000-01-01T00:00:00Z/2001-01-01T00:00:00Z'],
   ['description', ''],
-  ['helio_path', '../../data/mars_helios_TUWUmyIbQB.lst'],
+  ['helio_path', 'data/mars_helios_TUWUmyIbQB.lst'],
   // days
   ['revolution_period', 687],
   // number of data points in each revolution
@@ -155,10 +155,10 @@ const marsParams = new Map([
 const jupiterParams = new Map([
   ['id', 'Jupiter'],
   ['name', 'Jupiter'],
-  ['model_path', '../../models/Jupiter_rot_around_x.glb'],
+  ['model_path', 'models/Jupiter_rot_around_x.glb'],
   ['availability', '2000-01-01T00:00:00Z/2001-01-01T00:00:00Z'],
   ['description', ''],
-  ['helio_path', '../../data/jupiter_helios_Lo61p_mGMD.lst'],
+  ['helio_path', 'data/jupiter_helios_Lo61p_mGMD.lst'],
   // days
   ['revolution_period', 4331],
   // number of data points in each revolution
@@ -171,10 +171,10 @@ const jupiterParams = new Map([
 const saturnParams = new Map([
   ['id', 'Saturn'],
   ['name', 'Saturn'],
-  ['model_path', '../../models/Saturn_rot_around_x.glb'],
+  ['model_path', 'models/Saturn_rot_around_x.glb'],
   ['availability', '2000-01-01T00:00:00Z/2001-01-01T00:00:00Z'],
   ['description', ''],
-  ['helio_path', '../../data/saturn_helios_w__aG_TW9W.lst'],
+  ['helio_path', 'data/saturn_helios_w__aG_TW9W.lst'],
   // days
   ['revolution_period', 10747],
   // number of data points in each revolution
@@ -187,10 +187,10 @@ const saturnParams = new Map([
 const uranusParams = new Map([
   ['id', 'Uranus'],
   ['name', 'Uranus'],
-  ['model_path', '../../models/Uranus_rot_around_x.glb'],
+  ['model_path', 'models/Uranus_rot_around_x.glb'],
   ['availability', '2000-01-01T00:00:00Z/2001-01-01T00:00:00Z'],
   ['description', ''],
-  ['helio_path', '../../data/uranus_helios_9gBjTz_lJA.lst'],
+  ['helio_path', 'data/uranus_helios_9gBjTz_lJA.lst'],
   // days
   ['revolution_period', 30589],
   // number of data points in each revolution
@@ -203,10 +203,10 @@ const uranusParams = new Map([
 const neptuneParams = new Map([
   ['id', 'Neptune'],
   ['name', 'Neptune'],
-  ['model_path', '../../models/Neptune_rot_around_x.glb'],
+  ['model_path', 'models/Neptune_rot_around_x.glb'],
   ['availability', '2000-01-01T00:00:00Z/2001-01-01T00:00:00Z'],
   ['description', ''],
-  ['helio_path', '../../data/neptune_helios_Uk1SK6w8f_.lst'],
+  ['helio_path', 'data/neptune_helios_Uk1SK6w8f_.lst'],
   // days
   ['revolution_period', 59800],
   // number of data points in each revolution
@@ -219,10 +219,10 @@ const neptuneParams = new Map([
 const plutoParams = new Map([
   ['id', 'Pluto'],
   ['name', 'Pluto'],
-  ['model_path', '../../models/Pluto_rot_around_x.glb'],
+  ['model_path', 'models/Pluto_rot_around_x.glb'],
   ['availability', '2000-01-01T00:00:00Z/2001-01-01T00:00:00Z'],
   ['description', ''],
-  ['helio_path', '../../data/pluto_helios_B61wAOJLdE.lst'],
+  ['helio_path', 'data/pluto_helios_B61wAOJLdE.lst'],
   // days
   ['revolution_period', 90560],
   // number of data points in each revolution
@@ -495,8 +495,8 @@ function setPlanetProperties(planet_entity, planet_params) {
 
         //   //Load the Cesium plane model to represent the entity
         //   model: {
-        //     // uri: '../../models/Earth_1_12756.glb',
-        //     uri: '../../models/Earth_rot_around_x.glb',
+        //     // uri: 'models/Earth_1_12756.glb',
+        //     uri: 'models/Earth_rot_around_x.glb',
         //     minimumPixelSize: 64,
         //   },
 
@@ -577,7 +577,8 @@ const planetParams = new Map([
 ]);
 
 Sandcastle.addDefaultToolbarButton('Satellites', function () {
-  var dataSource = Cesium.CzmlDataSource.load('../../data/template.czml');
+  // TODO: make this a relative path cuz github otherwise loads https://sidwan02.github.io/data/template.czml
+  var dataSource = Cesium.CzmlDataSource.load('data/template.czml');
 
   viewer.dataSources.add(dataSource);
 
@@ -619,7 +620,7 @@ Sandcastle.addDefaultToolbarButton('Satellites', function () {
   clockSetup();
 
   // for debugging orientations
-  // createModel('../../models/Earth_1_12756.glb', 5000.0);
+  // createModel('models/Earth_1_12756.glb', 5000.0);
 
   setupViewer();
 
