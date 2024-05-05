@@ -98,7 +98,7 @@ const sunParams = new Map([
   ['orbital_resolution', null],
   // seconds
   ['rotation_period', day_to_sec * 26.6],
-  ['axial_tilt', 90 - 7.25],
+  ['axial_tilt', -90 + 7.25],
   ['heading', 0],
 ]);
 
