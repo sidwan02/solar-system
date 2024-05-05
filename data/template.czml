@@ -23,7 +23,7 @@
       "gltf": "../models/Earth_rot_around_x.glb"
     },
     "availability": "2000-01-01T00:00:00Z/2011-01-01T00:00:00Z",
-    "description": "<!--HTML-->\r\n<p>Earth is a high-resolution earth observation satellite owned by Earth which was launched in September 2008.</p>\r\n\r\n<p>On December 1, 2004, General Dynamics C4 Systems announced it had been awarded a contract worth approximately $209 million to build the OrbView-5 satellite. Its sensor is designed by the ITT Exelis.</p>\r\n\r\n<p>The satellite, now known as Earth, was originally scheduled for April 2008 but lost its 30-day launch slot to a U.S. government mission which had been delayed. It was rescheduled for launch August 22, 2008 from Vandenberg Air Force Base aboard a Delta II launch vehicle. The launch was postponed to September 4, 2008, due to unavailability of the Big Crow telemetry-relay aircraft. It was delayed again to September 6 because Hurricane Hanna interfered with its launch crews.</p>\r\n\r\n<p>The launch took place successfully on September 6, 2008 at 11:50:57 a.m. PDT (18:50:57 UTC). The Earth satellite separated successfully from its Delta II launch vehicle at 12:49 p.m. PDT (19:49 UTC), 58 minutes and 56 seconds after launch.</p>",
+    "description": "<!--HTML-->\r\n<p>Earth – our home planet – is the third planet from the Sun, and the fifth largest planet. It's the only place we know of inhabited by living things.</p>",
     "label": {
       "fillColor": {
         "rgba": [
@@ -96,7 +96,7 @@
       "scale": 500
     },
     "availability": "2000-01-01T00:00:00Z/2011-01-01T00:00:00Z",
-    "description": "<!--HTML-->\r\n<p>Sun is a high-resolution Sun observation satellite owned by Sun which was launched in September 2008.</p>\r\n\r\n<p>On December 1, 2004, General Dynamics C4 Systems announced it had been awarded a contract worth approximately $209 million to build the OrbView-5 satellite. Its sensor is designed by the ITT Exelis.</p>\r\n\r\n<p>The satellite, now known as Sun, was originally scheduled for April 2008 but lost its 30-day launch slot to a U.S. government mission which had been delayed. It was rescheduled for launch August 22, 2008 from Vandenberg Air Force Base aboard a Delta II launch vehicle. The launch was postponed to September 4, 2008, due to unavailability of the Big Crow telemetry-relay aircraft. It was delayed again to September 6 because Hurricane Hanna interfered with its launch crews.</p>\r\n\r\n<p>The launch took place successfully on September 6, 2008 at 11:50:57 a.m. PDT (18:50:57 UTC). The Sun satellite separated successfully from its Delta II launch vehicle at 12:49 p.m. PDT (19:49 UTC), 58 minutes and 56 seconds after launch.</p>",
+    "description": "<!--HTML-->\r\n<p>The Sun is the biggest object in our solar system, with a distance of 695,508 kilometres from centre to surface. It contains 99.86% of the mass of the entire solar system and could contain roughly 1.3 million Earths.</p>\r\n\r\n<p>The Sun is an average-sized star. Some stars are just a tenth of its size, while others are more than 700 times bigger. Due to its huge mass and strong gravity, the Sun is a near perfect sphere.</p>",
     "label": {
       "fillColor": {
         "rgba": [
@@ -168,7 +168,7 @@
       "gltf": "../models/Mercury_rot_around_x.glb"
     },
     "availability": "2000-01-01T00:00:00Z/2011-01-01T00:00:00Z",
-    "description": "<!--HTML-->\r\n<p>Mercury is a high-resolution Mercury observation satellite owned by Mercury which was launched in September 2008.</p>\r\n\r\n<p>On December 1, 2004, General Dynamics C4 Systems announced it had been awarded a contract worth approximately $209 million to build the OrbView-5 satellite. Its sensor is designed by the ITT Exelis.</p>\r\n\r\n<p>The satellite, now known as Mercury, was originally scheduled for April 2008 but lost its 30-day launch slot to a U.S. government mission which had been delayed. It was rescheduled for launch August 22, 2008 from Vandenberg Air Force Base aboard a Delta II launch vehicle. The launch was postponed to September 4, 2008, due to unavailability of the Big Crow telemetry-relay aircraft. It was delayed again to September 6 because Hurricane Hanna interfered with its launch crews.</p>\r\n\r\n<p>The launch took place successfully on September 6, 2008 at 11:50:57 a.m. PDT (18:50:57 UTC). The Mercury satellite separated successfully from its Delta II launch vehicle at 12:49 p.m. PDT (19:49 UTC), 58 minutes and 56 seconds after launch.</p>",
+    "description": "<!--HTML-->\r\n\r\n<p>The smallest planet in our solar system and nearest to the Sun, Mercury is only slightly larger than Earth's Moon. From the surface of Mercury, the Sun would appear more than three times as large as it does when viewed from Earth, and the sunlight would be as much as seven times brighter.</p>",
     "label": {
       "fillColor": {
         "rgba": [
@@ -240,7 +240,7 @@
       "gltf": "../models/Venus_rot_around_x.glb"
     },
     "availability": "2000-01-01T00:00:00Z/2011-01-01T00:00:00Z",
-    "description": "<!--HTML-->\r\n<p>Venus is a high-resolution Venus observation satellite owned by Venus which was launched in September 2008.</p>\r\n\r\n<p>On December 1, 2004, General Dynamics C4 Systems announced it had been awarded a contract worth approximately $209 million to build the OrbView-5 satellite. Its sensor is designed by the ITT Exelis.</p>\r\n\r\n<p>The satellite, now known as Venus, was originally scheduled for April 2008 but lost its 30-day launch slot to a U.S. government mission which had been delayed. It was rescheduled for launch August 22, 2008 from Vandenberg Air Force Base aboard a Delta II launch vehicle. The launch was postponed to September 4, 2008, due to unavailability of the Big Crow telemetry-relay aircraft. It was delayed again to September 6 because Hurricane Hanna interfered with its launch crews.</p>\r\n\r\n<p>The launch took place successfully on September 6, 2008 at 11:50:57 a.m. PDT (18:50:57 UTC). The Venus satellite separated successfully from its Delta II launch vehicle at 12:49 p.m. PDT (19:49 UTC), 58 minutes and 56 seconds after launch.</p>",
+    "description": "<!--HTML-->\r\n<p>Venus is the second planet from the Sun, and Earth's closest planetary neighbor. It's the hottest planet in our solar system, and it is sometimes called Earth's twin.</p>",
     "label": {
       "fillColor": {
         "rgba": [
@@ -312,7 +312,7 @@
       "gltf": "../models/Mars_rot_around_x.glb"
     },
     "availability": "2000-01-01T00:00:00Z/2011-01-01T00:00:00Z",
-    "description": "<!--HTML-->\r\n<p>Mars is a high-resolution Mars observation satellite owned by Mars which was launched in September 2008.</p>\r\n\r\n<p>On December 1, 2004, General Dynamics C4 Systems announced it had been awarded a contract worth approximately $209 million to build the OrbView-5 satellite. Its sensor is designed by the ITT Exelis.</p>\r\n\r\n<p>The satellite, now known as Mars, was originally scheduled for April 2008 but lost its 30-day launch slot to a U.S. government mission which had been delayed. It was rescheduled for launch August 22, 2008 from Vandenberg Air Force Base aboard a Delta II launch vehicle. The launch was postponed to September 4, 2008, due to unavailability of the Big Crow telemetry-relay aircraft. It was delayed again to September 6 because Hurricane Hanna interfered with its launch crews.</p>\r\n\r\n<p>The launch took place successfully on September 6, 2008 at 11:50:57 a.m. PDT (18:50:57 UTC). The Mars satellite separated successfully from its Delta II launch vehicle at 12:49 p.m. PDT (19:49 UTC), 58 minutes and 56 seconds after launch.</p>",
+    "description": "<!--HTML-->\r\n<p>Mars – the fourth planet from the Sun – is a dusty, cold, desert world with a very thin atmosphere. This dynamic planet has seasons, polar ice caps, extinct volcanoes, canyons and weather.</p>",
     "label": {
       "fillColor": {
         "rgba": [
@@ -384,7 +384,7 @@
       "gltf": "../models/Jupiter_rot_around_x.glb"
     },
     "availability": "2000-01-01T00:00:00Z/2011-01-01T00:00:00Z",
-    "description": "<!--HTML-->\r\n<p>Jupiter is a high-resolution Jupiter observation satellite owned by Jupiter which was launched in September 2008.</p>\r\n\r\n<p>On December 1, 2004, General Dynamics C4 Systems announced it had been awarded a contract worth approximately $209 million to build the OrbView-5 satellite. Its sensor is designed by the ITT Exelis.</p>\r\n\r\n<p>The satellite, now known as Jupiter, was originally scheduled for April 2008 but lost its 30-day launch slot to a U.S. government mission which had been delayed. It was rescheduled for launch August 22, 2008 from Vandenberg Air Force Base aboard a Delta II launch vehicle. The launch was postponed to September 4, 2008, due to unavailability of the Big Crow telemetry-relay aircraft. It was delayed again to September 6 because Hurricane Hanna interfered with its launch crews.</p>\r\n\r\n<p>The launch took place successfully on September 6, 2008 at 11:50:57 a.m. PDT (18:50:57 UTC). The Jupiter satellite separated successfully from its Delta II launch vehicle at 12:49 p.m. PDT (19:49 UTC), 58 minutes and 56 seconds after launch.</p>",
+    "description": "<!--HTML-->\r\n<p>Jupiter is the largest planet in our solar system – if it were a hollow shell, 1,000 Earths could fit inside. It's also the oldest planet, forming from the dust and gases left over from the Sun's formation 4.5 billion years ago.</p>",
     "label": {
       "fillColor": {
         "rgba": [
@@ -456,7 +456,7 @@
       "gltf": "../models/Saturn_rot_around_x.glb"
     },
     "availability": "2000-01-01T00:00:00Z/2011-01-01T00:00:00Z",
-    "description": "<!--HTML-->\r\n<p>Saturn is a high-resolution Saturn observation satellite owned by Saturn which was launched in September 2008.</p>\r\n\r\n<p>On December 1, 2004, General Dynamics C4 Systems announced it had been awarded a contract worth approximately $209 million to build the OrbView-5 satellite. Its sensor is designed by the ITT Exelis.</p>\r\n\r\n<p>The satellite, now known as Saturn, was originally scheduled for April 2008 but lost its 30-day launch slot to a U.S. government mission which had been delayed. It was rescheduled for launch August 22, 2008 from Vandenberg Air Force Base aboard a Delta II launch vehicle. The launch was postponed to September 4, 2008, due to unavailability of the Big Crow telemetry-relay aircraft. It was delayed again to September 6 because Hurricane Hanna interfered with its launch crews.</p>\r\n\r\n<p>The launch took place successfully on September 6, 2008 at 11:50:57 a.m. PDT (18:50:57 UTC). The Saturn satellite separated successfully from its Delta II launch vehicle at 12:49 p.m. PDT (19:49 UTC), 58 minutes and 56 seconds after launch.</p>",
+    "description": "<!--HTML-->\r\n<p>Saturn is the sixth planet from the Sun, and the second-largest planet in our solar system. Saturn is surrounded by a spectacular ring system, and it has dozens of moons.</p>",
     "label": {
       "fillColor": {
         "rgba": [
@@ -528,7 +528,7 @@
       "gltf": "../models/Uranus_rot_around_x.glb"
     },
     "availability": "2000-01-01T00:00:00Z/2011-01-01T00:00:00Z",
-    "description": "<!--HTML-->\r\n<p>Uranus is a high-resolution Uranus observation satellite owned by Uranus which was launched in September 2008.</p>\r\n\r\n<p>On December 1, 2004, General Dynamics C4 Systems announced it had been awarded a contract worth approximately $209 million to build the OrbView-5 satellite. Its sensor is designed by the ITT Exelis.</p>\r\n\r\n<p>The satellite, now known as Uranus, was originally scheduled for April 2008 but lost its 30-day launch slot to a U.S. government mission which had been delayed. It was rescheduled for launch August 22, 2008 from Vandenberg Air Force Base aboard a Delta II launch vehicle. The launch was postponed to September 4, 2008, due to unavailability of the Big Crow telemetry-relay aircraft. It was delayed again to September 6 because Hurricane Hanna interfered with its launch crews.</p>\r\n\r\n<p>The launch took place successfully on September 6, 2008 at 11:50:57 a.m. PDT (18:50:57 UTC). The Uranus satellite separated successfully from its Delta II launch vehicle at 12:49 p.m. PDT (19:49 UTC), 58 minutes and 56 seconds after launch.</p>",
+    "description": "<!--HTML-->\r\n<p>Uranus is the seventh planet from the Sun, and it has the third largest diameter of planets in our solar system. Uranus appears to spin sideways.</p>",
     "label": {
       "fillColor": {
         "rgba": [
@@ -600,7 +600,7 @@
       "gltf": "../models/Neptune_rot_around_x.glb"
     },
     "availability": "2000-01-01T00:00:00Z/2011-01-01T00:00:00Z",
-    "description": "<!--HTML-->\r\n<p>Neptune is a high-resolution Neptune observation satellite owned by Neptune which was launched in September 2008.</p>\r\n\r\n<p>On December 1, 2004, General Dynamics C4 Systems announced it had been awarded a contract worth approximately $209 million to build the OrbView-5 satellite. Its sensor is designed by the ITT Exelis.</p>\r\n\r\n<p>The satellite, now known as Neptune, was originally scheduled for April 2008 but lost its 30-day launch slot to a U.S. government mission which had been delayed. It was rescheduled for launch August 22, 2008 from Vandenberg Air Force Base aboard a Delta II launch vehicle. The launch was postponed to September 4, 2008, due to unavailability of the Big Crow telemetry-relay aircraft. It was delayed again to September 6 because Hurricane Hanna interfered with its launch crews.</p>\r\n\r\n<p>The launch took place successfully on September 6, 2008 at 11:50:57 a.m. PDT (18:50:57 UTC). The Neptune satellite separated successfully from its Delta II launch vehicle at 12:49 p.m. PDT (19:49 UTC), 58 minutes and 56 seconds after launch.</p>",
+    "description": "<!--HTML-->\r\n<p>Neptune is the eighth and most distant planet in our solar system. Dark, cold, and whipped by supersonic winds, ice giant Neptune is more than 30 times as far from the Sun as Earth. </p>",
     "label": {
       "fillColor": {
         "rgba": [
@@ -672,7 +672,7 @@
       "gltf": "../models/Pluto_rot_around_x.glb"
     },
     "availability": "2000-01-01T00:00:00Z/2011-01-01T00:00:00Z",
-    "description": "<!--HTML-->\r\n<p>Pluto is a high-resolution Pluto observation satellite owned by Pluto which was launched in September 2008.</p>\r\n\r\n<p>On December 1, 2004, General Dynamics C4 Systems announced it had been awarded a contract worth approximately $209 million to build the OrbView-5 satellite. Its sensor is designed by the ITT Exelis.</p>\r\n\r\n<p>The satellite, now known as Pluto, was originally scheduled for April 2008 but lost its 30-day launch slot to a U.S. government mission which had been delayed. It was rescheduled for launch August 22, 2008 from Vandenberg Air Force Base aboard a Delta II launch vehicle. The launch was postponed to September 4, 2008, due to unavailability of the Big Crow telemetry-relay aircraft. It was delayed again to September 6 because Hurricane Hanna interfered with its launch crews.</p>\r\n\r\n<p>The launch took place successfully on September 6, 2008 at 11:50:57 a.m. PDT (18:50:57 UTC). The Pluto satellite separated successfully from its Delta II launch vehicle at 12:49 p.m. PDT (19:49 UTC), 58 minutes and 56 seconds after launch.</p>",
+    "description": "<!--HTML-->\r\n<p>Pluto was long considered our solar system's ninth planet. But after the discovery of similar intriguing worlds deep in the Kuiper Belt, tiny Pluto was reclassified as a dwarf planet in 2006 by the International Astronomical Union.</p>",
     "label": {
       "fillColor": {
         "rgba": [
